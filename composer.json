@@ -1,0 +1,26 @@
+{
+    "name": "shimomo/boatrace-sdk-php",
+    "description": "BOATRACE SDK for PHP",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "shimomo",
+            "email": "yuichi@shimomo.net"
+        }
+    ],
+    "require": {
+        "php": ">=7.0.0",
+        "fabpot/goutte": "^3.0.0",
+        "illuminate/database": "^5.0.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.0.0",
+        "brianium/paratest": "^1.0.0",
+        "satooshi/php-coveralls": "^1.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Boatrace\\": "src/"
+        }
+    }
+}

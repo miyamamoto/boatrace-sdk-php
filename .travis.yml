@@ -1,0 +1,19 @@
+language: php
+
+php:
+  - 7.1
+
+services:
+  - postgresql
+
+install:
+  - travis_retry composer install --no-interaction --prefer-dist --no-suggest
+
+before_script:
+  - mkdir -p ./build/logs
+  - psql -c 'create database boatrace;' -U postgres
+
+script: travis_wait 30 ./vendor/bin/paratest -p 10
+
+after_script:
+  - travis_retry php ./vendor/bin/coveralls -v
