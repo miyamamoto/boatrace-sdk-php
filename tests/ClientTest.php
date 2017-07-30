@@ -38,18 +38,18 @@ class ClientTest extends \PHPUnit\Framework\TestCase
     /**
      * @return void
      */
-    public function testStoreRaceProgram()
+    public function testStoreRaceProgramInDatabase()
     {
-        $this->boatrace->storeRaceProgram(20170707, 24, 1);
+        $this->boatrace->storeRaceProgramInDatabase(20170707, 24, 1);
         $this->assertTrue(true);
     }
 
     /**
      * @return void
      */
-    public function testStoreRaceResult()
+    public function testStoreRaceResultInDatabase()
     {
-        $this->boatrace->storeRaceResult(20170707, 24, 1);
+        $this->boatrace->storeRaceResultInDatabase(20170707, 24, 1);
         $this->assertTrue(true);
     }
 

@@ -78,7 +78,7 @@ class Client
      * @param  int|null $sleep
      * @return void
      */
-    public function storeRaceProgram(int $date = null, int $place = null, int $race = null, int $sleep = null)
+    public function storeRaceProgramInDatabase(int $date = null, int $place = null, int $race = null, int $sleep = null)
     {
         $response = $this->getRaceProgram($date, $place, $race, $sleep);
         $this->instances['Database']->createTable('programs');
@@ -92,7 +92,7 @@ class Client
      * @param  int|null $sleep
      * @return void
      */
-    public function storeRaceResult(int $date = null, int $place = null, int $race = null, int $sleep = null)
+    public function storeRaceResultInDatabase(int $date = null, int $place = null, int $race = null, int $sleep = null)
     {
         $response = $this->getRaceResult($date, $place, $race, $sleep);
         $this->instances['Database']->createTable('results');
