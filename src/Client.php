@@ -105,7 +105,7 @@ class Client
      * @param  int|null $place
      * @param  int|null $race
      * @param  int|null $sleep
-     * @return arrayq-
+     * @return array
      */
     protected function crawl(string $name, int $date = null, int $place = null, int $race = null, int $sleep = null)
     {

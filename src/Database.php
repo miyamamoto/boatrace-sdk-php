@@ -2,7 +2,7 @@
 
 namespace Boatrace;
 
-use Illuminate\Database\Capsule\Manager;
+use Illuminate\Database\Capsule\Manager as Capsule;
 
 /**
  * @author shimomo
@@ -10,25 +10,26 @@ use Illuminate\Database\Capsule\Manager;
 class Database
 {
     /**
-     * @var array
-     */
-    protected $config;
-
-    /**
      * @var \Illuminate\Database\Capsule\Manager
      */
     protected $capsule;
+
+    /**
+     * @var array
+     */
+    protected $config;
 
     /**
      * @return void
      */
     public function __construct()
     {
-        $this->capsule = new Manager();
+        $this->capsule = new Capsule();
     }
 
     /**
-     * @param array $config
+     * @param  array $config
+     * @return void
      */
     public function setConfig(array $config)
     {
@@ -36,7 +37,7 @@ class Database
     }
 
     /**
-     * @return \Illuminate\Database\PostgresConnection
+     * @return \Illuminate\Database\Connection
      */
     public function connect()
     {
@@ -47,12 +48,12 @@ class Database
     }
 
     /**
-     * @param  strign $tableName
+     * @param  strign $name
      * @return void
      */
-    public function createTable(string $tableName)
+    public function createTable(string $name)
     {
-        switch ($tableName) {
+        switch ($name) {
             case 'programs':
             $this->connect()->statement('
                 create table if not exists programs (
@@ -248,16 +249,16 @@ class Database
     }
 
     /**
-     * @param  array $raceProgram
+     * @param  array $program
      * @return void
      */
-    public function storeRaceProgram(array $raceProgram)
+    public function storeRaceProgram(array $program)
     {
-        $storeRaceProgram = [];
+        $storeProgram = [];
 
-        foreach ($raceProgram as $placeId => $places) {
+        foreach ($program as $placeId => $places) {
             foreach ($places as $raceId => $races) {
-                $storeRaceProgram[] = [
+                $storeProgram[] = [
                     'date'                            => $races['basic']['date'],
                     'place_id'                        => $placeId,
                     'place_name'                      => $races['basic']['place'],
@@ -395,20 +396,20 @@ class Database
             }
         }
 
-        $this->connect()->table('programs')->insert($storeRaceProgram);
+        $this->connect()->table('programs')->insert($storeProgram);
     }
 
     /**
-     * @param  array $raceResult
+     * @param  array $result
      * @return void
      */
-    public function storeRaceResult(array $raceResult)
+    public function storeRaceResult(array $result)
     {
-        $storeRaceResult = [];
+        $storeResult = [];
 
-        foreach ($raceResult as $placeId => $places) {
+        foreach ($result as $placeId => $places) {
             foreach ($places as $raceId => $races) {
-                $storeRaceResult[] = [
+                $storeResult[] = [
                     'date'                  => $races['basic']['date'],
                     'place_id'              => $placeId,
                     'race_id'               => $raceId,
@@ -440,7 +441,7 @@ class Database
             }
         }
 
-        $this->connect()->table('results')->insert($storeRaceResult);
+        $this->connect()->table('results')->insert($storeResult);
     }
 
     /**
