@@ -161,11 +161,17 @@ class RaceProgramDatabase extends Database
     }
 
     /**
+     * @param  array $conditions
      * @return array
      */
-    public function get()
+    public function get(array $conditions = [])
     {
-        return $this->toArray($this->connect()->table('programs')->get());
+        $response = $this->connect()->table('programs');
+        foreach ($conditions as $k => $v) {
+            $response->where($k, $v);
+        }
+
+        return $this->toArray($response->orderBy('date', 'desc')->get());
     }
 
     /**

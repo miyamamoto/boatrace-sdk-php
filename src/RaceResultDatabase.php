@@ -55,11 +55,17 @@ class RaceResultDatabase extends Database
     }
 
     /**
+     * @param  array $conditions
      * @return array
      */
-    public function get()
+    public function get(array $conditions = [])
     {
-        return $this->toArray($this->connect()->table('results')->get());
+        $response = $this->connect()->table('results');
+        foreach ($conditions as $k => $v) {
+            $response->where($k, $v);
+        }
+
+        return $this->toArray($response->orderBy('date', 'desc')->get());
     }
 
     /**
