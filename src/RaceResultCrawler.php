@@ -29,6 +29,10 @@ class RaceResultCrawler extends Crawler
         $courseData  = [];
         $weatherData = [];
 
+        if (is_null($date)) {
+            $date = $this->instances['datetime']->format('Ymd');
+        }
+
         $url = sprintf('%s/owpc/pc/race/raceresult?hd=%s&jcd=%02d&rno=%d', $this->baseUrl, $date, $place, $race);
         $crawler = $this->instances['goutte']->request('GET', $url);
 

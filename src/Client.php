@@ -111,10 +111,6 @@ class Client
      */
     protected function crawl(string $name, int $date = null, int $place = null, int $race = null, int $seconds = null)
     {
-        if (is_null($date)) {
-            $date = $this->instances['datetime']->format('Ymd');
-        }
-
         if (is_null($seconds) || $seconds < 0) {
             $seconds = 1;
         }
