@@ -17,12 +17,20 @@ $ composer require shimomo/boatrace-sdk-php
 ```php
 <?php
 
+/**************************************************
+ * BOATRACE SDK for PHPの利用準備
+ **************************************************/
+
+// ライブラリの読み込み
 require __DIR__ . '/../vendor/autoload.php';
 
+// インスタンスの生成
 $boatrace = new \Boatrace\Client();
 
+
+
 /**************************************************
- * 出走表のデータを取得する.
+ * 出走表データの取得
  **************************************************/
 
 // 2017年07月07日, 大村, 1R
@@ -37,8 +45,10 @@ var_dump($response);
 $response = $boatrace->getRaceProgram(20170707, 24);
 var_dump($response);
 
+
+
 /**************************************************
- * 結果のデータを取得する.
+ * 結果データの取得
  **************************************************/
 
 // 2017年07月07日, 大村, 1R
@@ -53,8 +63,10 @@ var_dump($response);
 $response = $boatrace->getRaceResult(20170707);
 var_dump($response);
 
+
+
 /**************************************************
- * データを取得してデータベースに登録する.
+ * データを取得してデータベースに登録
  **************************************************/
 
 // データベースの設定
@@ -71,11 +83,11 @@ $config = [
 
 // 2017年07月07日, 大村, 1R
 $this->boatrace->setConfig($config);
-$this->boatrace->registerRaceProgram(20170707, 24, 1);
+$this->boatrace->storeRaceProgramInDatabase(20170707, 24, 1);
 
 // 2017年07月07日, 大村, 1R
 $this->boatrace->setConfig($config);
-$this->boatrace->registerRaceResult(20170707, 24, 1);
+$this->boatrace->storeRaceResultInDatabase(20170707, 24, 1);
 ```
 
 ## Example
