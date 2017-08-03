@@ -38,5 +38,5 @@ abstract class Crawler
     /**
      * @param array $response
      */
-    abstract protected function crawl(array $response);
+    abstract protected function crawl(array $response, int $date, int $place, int $race);
 }

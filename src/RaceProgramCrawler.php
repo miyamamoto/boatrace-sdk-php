@@ -16,13 +16,13 @@ class RaceProgramCrawler extends Crawler
     }
 
     /**
-     * @param  array    $response
-     * @param  int|null $date
-     * @param  int|null $place
-     * @param  int|null $race
+     * @param  array $response
+     * @param  int   $date
+     * @param  int   $place
+     * @param  int   $race
      * @return array
      */
-    public function crawl(array $response, int $date = null, int $place = null, int $race = null)
+    public function crawl(array $response, int $date, int $place, int $race)
     {
         $basicData = [];
         $racerData = [];

@@ -48,12 +48,12 @@ abstract class Database
     }
 
     /**
-     * @param  array $array
+     * @param  array $data
      * @return array
      */
-    protected function toArray($array)
+    protected function toArray($data)
     {
-        return json_decode(json_encode($array), true);
+        return json_decode(json_encode($data), true);
     }
 
     /**
@@ -62,6 +62,7 @@ abstract class Database
     abstract public function create();
 
     /**
+     * @param  array $conditions
      * @return array
      */
     abstract public function get(array $conditions);

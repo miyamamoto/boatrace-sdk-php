@@ -22,7 +22,7 @@ class RaceResultCrawler extends Crawler
      * @param  int   $race
      * @return array
      */
-    public function crawl(array $response, int $date = null, int $place = null, int $race = null)
+    public function crawl(array $response, int $date, int $place, int $race)
     {
         $basicData   = [];
         $arrivalData = [];
