@@ -181,6 +181,11 @@ class RaceProgramDatabase extends Database
     public function store(array $data)
     {
         $storeData = [];
+        array_walk_recursive($data, function (&$v, $k) {
+            if ($v === '-') {
+                $v = null;
+            }
+        });
 
         foreach ($data as $placeId => $places) {
             foreach ($places as $raceId => $races) {
