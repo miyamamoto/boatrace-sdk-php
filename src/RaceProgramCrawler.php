@@ -44,10 +44,10 @@ class RaceProgramCrawler extends Crawler
             $detail    = $crawler->filter('div.heading2_head div.heading2_title span.heading2_titleDetail.is-type1')->text();
 
             list($type, $empty, $distance) = explode("\n", trim($detail));
-
-            $name     = trim($name);
-            $type     = trim($type);
-            $distance = trim($distance);
+            $placeName = trim(mb_convert_kana($placeName, 's', 'utf-8'));
+            $name      = trim(mb_convert_kana($name, 's', 'utf-8'));
+            $type      = trim(mb_convert_kana($type, 's', 'utf-8'));
+            $distance  = trim(mb_convert_kana($distance, 's', 'utf-8'));
 
             $basicData = [
                 'date'     => $date,
