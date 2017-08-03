@@ -164,7 +164,7 @@ class RaceProgramDatabase extends Database
      * @param  array $conditions
      * @return array
      */
-    public function get(array $conditions = [])
+    public function get(array $conditions)
     {
         $response = $this->connect()->table('programs');
         foreach ($conditions as $k => $v) {

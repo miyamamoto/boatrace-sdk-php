@@ -64,7 +64,7 @@ abstract class Database
     /**
      * @return array
      */
-    abstract public function get();
+    abstract public function get(array $conditions);
 
     /**
      * @param  array $data

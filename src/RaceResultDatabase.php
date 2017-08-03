@@ -58,7 +58,7 @@ class RaceResultDatabase extends Database
      * @param  array $conditions
      * @return array
      */
-    public function get(array $conditions = [])
+    public function get(array $conditions)
     {
         $response = $this->connect()->table('results');
         foreach ($conditions as $k => $v) {

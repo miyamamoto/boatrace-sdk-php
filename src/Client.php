@@ -60,17 +60,17 @@ class Client
     /**
      * @return array
      */
-    public function getRaceProgramViaDatabase()
+    public function getRaceProgramViaDatabase(array $conditions = [])
     {
-        return $this->instances['RaceProgramDatabase']->get();
+        return $this->instances['RaceProgramDatabase']->get($conditions);
     }
 
     /**
      * @return array
      */
-    public function getRaceResultViaDatabase()
+    public function getRaceResultViaDatabase(array $conditions = [])
     {
-        return $this->instances['RaceResultDatabase']->get();
+        return $this->instances['RaceResultDatabase']->get($conditions);
     }
 
     /**
