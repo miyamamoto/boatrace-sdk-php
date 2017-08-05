@@ -58,6 +58,7 @@ class Client
     }
 
     /**
+     * @param  arrat $conditions
      * @return array
      */
     public function getRaceProgramViaDatabase(array $conditions = [])
@@ -66,6 +67,7 @@ class Client
     }
 
     /**
+     * @param  arrat $conditions
      * @return array
      */
     public function getRaceResultViaDatabase(array $conditions = [])
@@ -102,46 +104,46 @@ class Client
     }
 
     /**
-     * @param  string   $name
+     * @param  string   $className
      * @param  int|null $date
      * @param  int|null $place
      * @param  int|null $race
      * @param  int|null $seconds
      * @return array
      */
-    protected function crawl(string $name, int $date = null, int $place = null, int $race = null, int $seconds = null)
+    protected function crawl(string $className, int $date = null, int $place = null, int $race = null, int $seconds = null)
     {
         if (is_null($seconds) || $seconds < 0) {
             $seconds = 1;
         }
 
         if (is_null($place) && is_null($race)) {
-            return $this->crawlWithoutPlaceRace($name, $date, $seconds);
+            return $this->crawlWithoutPlaceRace($className, $date, $seconds);
         }
 
         if (is_null($place)) {
-            return $this->crawlWithoutPlace($name, $date, $race, $seconds);
+            return $this->crawlWithoutPlace($className, $date, $race, $seconds);
         }
 
         if (is_null($race)) {
-            return $this->crawlWithoutRace($name, $date, $place, $seconds);
+            return $this->crawlWithoutRace($className, $date, $place, $seconds);
         }
 
-        return $this->instances[$name]->crawl([], $date, $place, $race);
+        return $this->instances[$className]->crawl([], $date, $place, $race);
     }
 
     /**
-     * @param  string $name
+     * @param  string $className
      * @param  int    $date
      * @param  int    $seconds
      * @return array
      */
-    protected function crawlWithoutPlaceRace(string $name, int $date, int $seconds)
+    protected function crawlWithoutPlaceRace(string $className, int $date, int $seconds)
     {
         $response = [];
         for ($i = 1; $i <= 24; $i++) {
             for ($h = 1; $h <= 12; $h++) {
-                $response = $this->instances[$name]->crawl($response, $date, $i, $h);
+                $response = $this->instances[$className]->crawl($response, $date, $i, $h);
                 sleep($seconds);
             }
         }
@@ -150,17 +152,17 @@ class Client
     }
 
     /**
-     * @param  string $name
+     * @param  string $className
      * @param  int    $date
      * @param  int    $race
      * @param  int    $seconds
      * @return array
      */
-    protected function crawlWithoutPlace(string $name, int $date, int $race, int $seconds)
+    protected function crawlWithoutPlace(string $className, int $date, int $race, int $seconds)
     {
         $response = [];
         for ($i = 1; $i <= 24; $i++) {
-            $response = $this->instances[$name]->crawl($response, $date, $i, $race);
+            $response = $this->instances[$className]->crawl($response, $date, $i, $race);
             sleep($seconds);
         }
 
@@ -168,17 +170,17 @@ class Client
     }
 
     /**
-     * @param  string $name
+     * @param  string $className
      * @param  int    $date
      * @param  int    $place
      * @param  int    $seconds
      * @return array
      */
-    protected function crawlWithoutRace(string $name, int $date, int $place, int $seconds)
+    protected function crawlWithoutRace(string $className, int $date, int $place, int $seconds)
     {
         $response = [];
         for ($h = 1; $h <= 12; $h++) {
-            $response = $this->instances[$name]->crawl($response, $date, $place, $h);
+            $response = $this->instances[$className]->crawl($response, $date, $place, $h);
             sleep($seconds);
         }
 

@@ -93,8 +93,7 @@ class RaceProgramCrawler extends Crawler
                 list($boatNumber, $boatRate2, $boatRate3)                  = explode("\n", trim($boatRate));
 
                 list($lastName, $firstName) = $this->splitName($name);
-                $name = sprintf('%s %s', $lastName, $firstName);
-
+                $name            = sprintf('%s %s', $lastName, $firstName);
                 $frame           = trim(mb_convert_kana($frame, 'n', 'utf-8'));
                 $id              = trim(mb_convert_kana($id, 'n', 'utf-8'));
                 $rank            = trim(mb_convert_kana($rank, 'n', 'utf-8'));

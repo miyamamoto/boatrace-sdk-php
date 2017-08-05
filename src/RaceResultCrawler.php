@@ -50,10 +50,9 @@ class RaceResultCrawler extends Crawler
 
                 list($lastName, $firstName) = $this->splitName($racerName);
                 $racerName = sprintf('%s %s', $lastName, $firstName);
-
-                $arrival = mb_convert_kana($arrival, 'n', 'utf-8');
-                $frame   = mb_convert_kana($frame, 'n', 'utf-8');
-                $racerId = mb_convert_kana($racerId, 'n', 'utf-8');
+                $arrival = trim(mb_convert_kana($arrival, 'n', 'utf-8'));
+                $frame   = trim(mb_convert_kana($frame, 'n', 'utf-8'));
+                $racerId = trim(mb_convert_kana($racerId, 'n', 'utf-8'));
 
                 $arrivalData[] = [
                     'arrival'   => $arrival,
@@ -73,6 +72,9 @@ class RaceResultCrawler extends Crawler
                 $start = $element->filter('div.table1_boatImage1 span.table1_boatImage1TimeInner')->text();
 
                 list($startTiming, $technique) = $this->splitName($start);
+                $frame       = trim(mb_convert_kana($frame, 'n', 'utf-8'));
+                $startTiming = trim(mb_convert_kana($startTiming, 'n', 'utf-8'));
+                $technique   = trim(mb_convert_kana($technique, 'n', 'utf-8'));
 
                 $courseData[] = [
                     'frame'       => $frame,
@@ -97,12 +99,12 @@ class RaceResultCrawler extends Crawler
             $wave             = $crawler->filter('div.weather1_body div.weather1_bodyUnit.is-wave span.weather1_bodyUnitLabelData')->text();
             $technique        = $crawler->filter('table.is-w243.is-h168 td.is-fs16')->text();
 
-            $temperature      = trim($temperature);
-            $weather          = trim($weather);
-            $wind             = trim($wind);
-            $waterTemperature = trim($waterTemperature);
-            $wave             = trim($wave);
-            $technique        = trim($technique);
+            $temperature      = trim(mb_convert_kana($temperature, 'n', 'utf-8'));
+            $weather          = trim(mb_convert_kana($weather, 'n', 'utf-8'));
+            $wind             = trim(mb_convert_kana($wind, 'n', 'utf-8'));
+            $waterTemperature = trim(mb_convert_kana($waterTemperature, 'n', 'utf-8'));
+            $wave             = trim(mb_convert_kana($wave, 'n', 'utf-8'));
+            $technique        = trim(mb_convert_kana($technique, 'n', 'utf-8'));
 
             $basicData = [
                 'date'      => $date,
