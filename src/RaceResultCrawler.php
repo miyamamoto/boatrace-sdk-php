@@ -50,9 +50,9 @@ class RaceResultCrawler extends Crawler
 
                 list($lastName, $firstName) = $this->splitName($racerName);
                 $racerName = sprintf('%s %s', $lastName, $firstName);
-                $arrival = (int)trim(mb_convert_kana($arrival, 'n', 'utf-8'));
-                $frame   = (int)trim(mb_convert_kana($frame, 'n', 'utf-8'));
-                $racerId = (int)trim(mb_convert_kana($racerId, 'n', 'utf-8'));
+                $arrival   = $this->convertArrival(trim(mb_convert_kana($arrival, 'n', 'utf-8')));
+                $frame     = (int)trim(mb_convert_kana($frame, 'n', 'utf-8'));
+                $racerId   = (int)trim(mb_convert_kana($racerId, 'n', 'utf-8'));
 
                 $arrivalData[] = [
                     'arrival'   => $arrival,
@@ -128,6 +128,57 @@ class RaceResultCrawler extends Crawler
         }
 
         return $response;
+    }
+
+    /**
+     * @param  string $arrival
+     * @return int
+     */
+    protected function convertArrival(string $arrival)
+    {
+        if (is_numeric($arrival)) {
+            return (int)$arrival;
+        }
+
+        if ($arrival === '妨') {
+            return 7;
+        }
+
+        if ($arrival === 'エ') {
+            return 8;
+        }
+
+        if ($arrival === '転') {
+            return 9;
+        }
+
+        if ($arrival === '落') {
+            return 10;
+        }
+
+        if ($arrival === '沈') {
+            return 11;
+        }
+
+        if ($arrival === '不') {
+            return 12;
+        }
+
+        if ($arrival === '失') {
+            return 13;
+        }
+
+        if ($arrival === 'Ｆ') {
+            return 14;
+        }
+
+        if ($arrival === 'L') {
+            return 15;
+        }
+
+        if ($arrival === '欠') {
+            return 16;
+        }
     }
 
     /**
