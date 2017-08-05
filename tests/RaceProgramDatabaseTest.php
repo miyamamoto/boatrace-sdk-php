@@ -70,12 +70,12 @@ class RaceProgramDatabaseTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('浜名湖', $response[0]['place_name']);
         $this->assertSame('静岡新聞社・静岡放送 Ｎｅｗ Ｙｅａｒ’ｓ Ｃｕｐ', $response[0]['race_name']);
         $this->assertSame('予 選', $response[0]['race_type']);
-        $this->assertSame('1800m', $response[0]['race_distance']);
-        $this->assertSame(3156, $response[0]['racer_id_frame_1']);
-        $this->assertSame(3987, $response[0]['racer_id_frame_2']);
-        $this->assertSame(4625, $response[0]['racer_id_frame_3']);
-        $this->assertSame(4417, $response[0]['racer_id_frame_4']);
-        $this->assertSame(4740, $response[0]['racer_id_frame_5']);
-        $this->assertSame(4342, $response[0]['racer_id_frame_6']);
+        $this->assertSame(1800, $response[0]['race_distance']);
+        $this->assertSame(3156, $response[0]['frame_1_racer_id']);
+        $this->assertSame(3987, $response[0]['frame_2_racer_id']);
+        $this->assertSame(4625, $response[0]['frame_3_racer_id']);
+        $this->assertSame(4417, $response[0]['frame_4_racer_id']);
+        $this->assertSame(4740, $response[0]['frame_5_racer_id']);
+        $this->assertSame(4342, $response[0]['frame_6_racer_id']);
     }
 }

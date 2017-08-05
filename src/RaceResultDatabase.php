@@ -26,7 +26,7 @@ class RaceResultDatabase extends Database
                 date                  integer,
                 place_id              integer,
                 race_id               integer,
-                technique             text,
+                technique             integer,
                 arrival_1_racer_id    integer,
                 arrival_2_racer_id    integer,
                 arrival_3_racer_id    integer,
@@ -51,17 +51,17 @@ class RaceResultDatabase extends Database
                 course_4_frame        integer,
                 course_5_frame        integer,
                 course_6_frame        integer,
-                course_1_start_timing text,
-                course_2_start_timing text,
-                course_3_start_timing text,
-                course_4_start_timing text,
-                course_5_start_timing text,
-                course_6_start_timing text,
-                weather               text,
-                wind                  text,
-                wave                  text,
-                temperature           text,
-                water_temperature     text
+                course_1_start_timing integer,
+                course_2_start_timing integer,
+                course_3_start_timing integer,
+                course_4_start_timing integer,
+                course_5_start_timing integer,
+                course_6_start_timing integer,
+                weather               integer,
+                wind                  integer,
+                wave                  integer,
+                temperature           numeric,
+                water_temperature     numeric
             );
         ');
     }
