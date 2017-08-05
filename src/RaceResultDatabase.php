@@ -27,12 +27,24 @@ class RaceResultDatabase extends Database
                 place_id              integer,
                 race_id               integer,
                 technique             text,
+                arrival_1_racer_id    integer,
+                arrival_2_racer_id    integer,
+                arrival_3_racer_id    integer,
+                arrival_4_racer_id    integer,
+                arrival_5_racer_id    integer,
+                arrival_6_racer_id    integer,
                 arrival_1_frame       integer,
                 arrival_2_frame       integer,
                 arrival_3_frame       integer,
                 arrival_4_frame       integer,
                 arrival_5_frame       integer,
                 arrival_6_frame       integer,
+                course_1_racer_id     integer,
+                course_2_racer_id     integer,
+                course_3_racer_id     integer,
+                course_4_racer_id     integer,
+                course_5_racer_id     integer,
+                course_6_racer_id     integer,
                 course_1_frame        integer,
                 course_2_frame        integer,
                 course_3_frame        integer,
@@ -78,16 +90,41 @@ class RaceResultDatabase extends Database
 
         foreach ($data as $placeId => $places) {
             foreach ($places as $raceId => $races) {
+                $frames = [
+                    $races['arrival'][0]['frame'] => ['racerId' => $races['arrival'][0]['racerId']],
+                    $races['arrival'][1]['frame'] => ['racerId' => $races['arrival'][1]['racerId']],
+                    $races['arrival'][2]['frame'] => ['racerId' => $races['arrival'][2]['racerId']],
+                    $races['arrival'][3]['frame'] => ['racerId' => $races['arrival'][3]['racerId']],
+                    $races['arrival'][4]['frame'] => ['racerId' => $races['arrival'][4]['racerId']],
+                    $races['arrival'][5]['frame'] => ['racerId' => $races['arrival'][5]['racerId']],
+                ];
+
+                if (! ksort($frames)) {
+                    continue;
+                }
+
                 $storeData[] = [
                     'date'                  => $races['basic']['date'],
                     'place_id'              => $placeId,
                     'race_id'               => $raceId,
+                    'arrival_1_racer_id'    => $races['arrival'][0]['racerId'],
+                    'arrival_2_racer_id'    => $races['arrival'][1]['racerId'],
+                    'arrival_3_racer_id'    => $races['arrival'][2]['racerId'],
+                    'arrival_4_racer_id'    => $races['arrival'][3]['racerId'],
+                    'arrival_5_racer_id'    => $races['arrival'][4]['racerId'],
+                    'arrival_6_racer_id'    => $races['arrival'][5]['racerId'],
                     'arrival_1_frame'       => $races['arrival'][0]['frame'],
                     'arrival_2_frame'       => $races['arrival'][1]['frame'],
                     'arrival_3_frame'       => $races['arrival'][2]['frame'],
                     'arrival_4_frame'       => $races['arrival'][3]['frame'],
                     'arrival_5_frame'       => $races['arrival'][4]['frame'],
                     'arrival_6_frame'       => $races['arrival'][5]['frame'],
+                    'course_1_racer_id'     => $frames[$races['course'][0]['frame']]['racerId'],
+                    'course_2_racer_id'     => $frames[$races['course'][1]['frame']]['racerId'],
+                    'course_3_racer_id'     => $frames[$races['course'][2]['frame']]['racerId'],
+                    'course_4_racer_id'     => $frames[$races['course'][3]['frame']]['racerId'],
+                    'course_5_racer_id'     => $frames[$races['course'][4]['frame']]['racerId'],
+                    'course_6_racer_id'     => $frames[$races['course'][5]['frame']]['racerId'],
                     'course_1_frame'        => $races['course'][0]['frame'],
                     'course_2_frame'        => $races['course'][1]['frame'],
                     'course_3_frame'        => $races['course'][2]['frame'],
