@@ -10,7 +10,7 @@ abstract class Crawler
     /**
      * @var string
      */
-    protected $baseUrl = 'http://www.boatrace.jp';
+    protected $baseUrl = 'https://www.boatrace.jp';
 
     /**
      * @var array
