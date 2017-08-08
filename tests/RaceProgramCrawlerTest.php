@@ -28,7 +28,7 @@ class RaceProgramCrawlerTest extends \PHPUnit\Framework\TestCase
         $response = $this->boatrace->crawl([], 20140101, 6, 1);
         $this->assertSame(20140101, $response[6][1]['basic']['date']);
         $this->assertSame('浜名湖', $response[6][1]['basic']['place']);
-        $this->assertSame('静岡新聞社・静岡放送 Ｎｅｗ Ｙｅａｒ’ｓ Ｃｕｐ', $response[6][1]['basic']['name']);
+        $this->assertSame('静岡新聞社・静岡放送 New Year’s Cup', $response[6][1]['basic']['name']);
         $this->assertSame('予 選', $response[6][1]['basic']['type']);
         $this->assertSame(1800, $response[6][1]['basic']['distance']);
         $this->assertSame(1, $response[6][1]['racer'][0]['frame']);
