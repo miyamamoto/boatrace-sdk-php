@@ -97,6 +97,12 @@ class RaceProgramCrawlerTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(0, $response[6][1]['racer'][3]['late']);
         $this->assertSame(0, $response[6][1]['racer'][4]['late']);
         $this->assertSame(0, $response[6][1]['racer'][5]['late']);
+        $this->assertSame(0.14, $response[6][1]['racer'][0]['startTiming']);
+        $this->assertSame(0.17, $response[6][1]['racer'][1]['startTiming']);
+        $this->assertSame(0.16, $response[6][1]['racer'][2]['startTiming']);
+        $this->assertSame(0.19, $response[6][1]['racer'][3]['startTiming']);
+        $this->assertSame(0.22, $response[6][1]['racer'][4]['startTiming']);
+        $this->assertSame(0.14, $response[6][1]['racer'][5]['startTiming']);
         $this->assertSame(6.26, $response[6][1]['racer'][0]['nationwideRate1']);
         $this->assertSame(6.60, $response[6][1]['racer'][1]['nationwideRate1']);
         $this->assertSame(4.72, $response[6][1]['racer'][2]['nationwideRate1']);
