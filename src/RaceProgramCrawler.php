@@ -44,10 +44,10 @@ class RaceProgramCrawler extends Crawler
             $detail    = $crawler->filter('div.heading2_head div.heading2_title span.heading2_titleDetail.is-type1')->text();
 
             list($type, $empty, $distance) = explode("\n", trim($detail));
-            $placeName = trim(mb_convert_kana($placeName, 's', 'utf-8'));
-            $name      = trim(mb_convert_kana($name, 's', 'utf-8'));
-            $type      = trim(mb_convert_kana($type, 's', 'utf-8'));
-            $distance  = (int)rtrim(trim(mb_convert_kana($distance, 's', 'utf-8')), 'm');
+            $placeName = $this->instances['converter']->convertString($placeName);
+            $name      = $this->instances['converter']->convertString($name);
+            $type      = $this->instances['converter']->convertString($type);
+            $distance  = $this->instances['converter']->convertInt($distance);
 
             $basicData = [
                 'date'     => $date,
@@ -91,31 +91,32 @@ class RaceProgramCrawler extends Crawler
                 list($localRate1, $localRate2, $localRate3)                = explode("\n", trim($localRate));
                 list($motorNumber, $motorRate2, $motorRate3)               = explode("\n", trim($motorRate));
                 list($boatNumber, $boatRate2, $boatRate3)                  = explode("\n", trim($boatRate));
-                list($lastName, $firstName)                                = $this->splitName($name);
 
-                $name            = sprintf('%s %s', $lastName, $firstName);
-                $frame           = (int)trim(mb_convert_kana($frame, 'n', 'utf-8'));
-                $id              = (int)trim(mb_convert_kana($id, 'n', 'utf-8'));
-                $rank            = trim(mb_convert_kana($rank, 'n', 'utf-8'));
-                $branch          = trim(mb_convert_kana($branch, 'n', 'utf-8'));
-                $graduate        = trim(mb_convert_kana($graduate, 'n', 'utf-8'));
-                $age             = (int)rtrim(trim(mb_convert_kana($age, 'n', 'utf-8')), '歳');
-                $weight          = (float)rtrim(trim(mb_convert_kana($weight, 'n', 'utf-8')), 'kg');
-                $flying          = (int)ltrim(trim(mb_convert_kana($flying, 'n', 'utf-8')), 'F');
-                $late            = (int)ltrim(trim(mb_convert_kana($late, 'n', 'utf-8')), 'L');
-                $startTiming     = (int)ltrim(trim(mb_convert_kana($startTiming, 'n', 'utf-8')), '0.');
-                $nationwideRate1 = (float)trim(mb_convert_kana($nationwideRate1, 'n', 'utf-8'));
-                $nationwideRate2 = (float)trim(mb_convert_kana($nationwideRate2, 'n', 'utf-8'));
-                $nationwideRate3 = (float)trim(mb_convert_kana($nationwideRate3, 'n', 'utf-8'));
-                $localRate1      = (float)trim(mb_convert_kana($localRate1, 'n', 'utf-8'));
-                $localRate2      = (float)trim(mb_convert_kana($localRate2, 'n', 'utf-8'));
-                $localRate3      = (float)trim(mb_convert_kana($localRate3, 'n', 'utf-8'));
-                $motorNumber     = (int)trim(mb_convert_kana($motorNumber, 'n', 'utf-8'));
-                $motorRate2      = (float)trim(mb_convert_kana($motorRate2, 'n', 'utf-8'));
-                $motorRate3      = (float)trim(mb_convert_kana($motorRate3, 'n', 'utf-8'));
-                $boatNumber      = (int)trim(mb_convert_kana($boatNumber, 'n', 'utf-8'));
-                $boatRate2       = (float)trim(mb_convert_kana($boatRate2, 'n', 'utf-8'));
-                $boatRate3       = (float)trim(mb_convert_kana($boatRate3, 'n', 'utf-8'));
+                list($lastName, $firstName) = $this->splitName($name);
+                $name = sprintf('%s %s', $lastName, $firstName);
+
+                $frame           = $this->instances['converter']->convertInt($frame);
+                $id              = $this->instances['converter']->convertInt($id);
+                $rank            = $this->instances['converter']->convertString($rank);
+                $branch          = $this->instances['converter']->convertString($branch);
+                $graduate        = $this->instances['converter']->convertString($graduate);
+                $age             = $this->instances['converter']->convertInt($age);
+                $weight          = $this->instances['converter']->convertFloat($weight);
+                $flying          = $this->instances['converter']->convertFlying($flying);
+                $late            = $this->instances['converter']->convertLate($late);
+                $startTiming     = $this->instances['converter']->convertStartTiming($startTiming);
+                $nationwideRate1 = $this->instances['converter']->convertFloat($nationwideRate1);
+                $nationwideRate2 = $this->instances['converter']->convertFloat($nationwideRate2);
+                $nationwideRate3 = $this->instances['converter']->convertFloat($nationwideRate3);
+                $localRate1      = $this->instances['converter']->convertFloat($localRate1);
+                $localRate2      = $this->instances['converter']->convertFloat($localRate2);
+                $localRate3      = $this->instances['converter']->convertFloat($localRate3);
+                $motorNumber     = $this->instances['converter']->convertInt($motorNumber);
+                $motorRate2      = $this->instances['converter']->convertFloat($motorRate2);
+                $motorRate3      = $this->instances['converter']->convertFloat($motorRate3);
+                $boatNumber      = $this->instances['converter']->convertInt($boatNumber);
+                $boatRate2       = $this->instances['converter']->convertFloat($boatRate2);
+                $boatRate3       = $this->instances['converter']->convertFloat($boatRate3);
 
                 $racerData[] = [
                     'frame'           => $frame,

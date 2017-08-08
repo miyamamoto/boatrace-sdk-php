@@ -22,8 +22,9 @@ abstract class Crawler
      */
     protected function __construct()
     {
-        $this->instances['datetime'] = new \DateTimeImmutable();
-        $this->instances['goutte']   = new \Goutte\Client();
+        $this->instances['converter'] = new Converter();
+        $this->instances['datetime']  = new \DateTimeImmutable();
+        $this->instances['goutte']    = new \Goutte\Client();
     }
 
     /**

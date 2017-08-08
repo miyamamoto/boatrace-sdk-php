@@ -215,12 +215,12 @@ class ClientTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(4, $response[0]['course_4_frame']);
         $this->assertSame(5, $response[0]['course_5_frame']);
         $this->assertSame(6, $response[0]['course_6_frame']);
-        $this->assertSame(18, $response[0]['course_1_start_timing']);
-        $this->assertSame(18, $response[0]['course_2_start_timing']);
-        $this->assertSame(21, $response[0]['course_3_start_timing']);
-        $this->assertSame(17, $response[0]['course_4_start_timing']);
-        $this->assertSame(25, $response[0]['course_5_start_timing']);
-        $this->assertSame(19, $response[0]['course_6_start_timing']);
+        $this->assertSame(0.18, (float)$response[0]['course_1_start_timing']);
+        $this->assertSame(0.18, (float)$response[0]['course_2_start_timing']);
+        $this->assertSame(0.21, (float)$response[0]['course_3_start_timing']);
+        $this->assertSame(0.17, (float)$response[0]['course_4_start_timing']);
+        $this->assertSame(0.25, (float)$response[0]['course_5_start_timing']);
+        $this->assertSame(0.19, (float)$response[0]['course_6_start_timing']);
         $this->assertSame(2, $response[0]['weather']);
         $this->assertSame(3, $response[0]['wind']);
         $this->assertSame(2, $response[0]['wave']);
@@ -250,7 +250,7 @@ class ClientTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(54.0, $response[24][1]['racer'][0]['weight']);
         $this->assertSame(1, $response[24][1]['racer'][0]['flying']);
         $this->assertSame(0, $response[24][1]['racer'][0]['late']);
-        $this->assertSame(13, $response[24][1]['racer'][0]['startTiming']);
+        $this->assertSame(0.13, $response[24][1]['racer'][0]['startTiming']);
         $this->assertSame(6.45, $response[24][1]['racer'][0]['nationwideRate1']);
         $this->assertSame(45.36, $response[24][1]['racer'][0]['nationwideRate2']);
         $this->assertSame(65.98, $response[24][1]['racer'][0]['nationwideRate3']);
@@ -287,7 +287,7 @@ class ClientTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(54.0, $response[24][1]['racer'][0]['weight']);
         $this->assertSame(1, $response[24][1]['racer'][0]['flying']);
         $this->assertSame(0, $response[24][1]['racer'][0]['late']);
-        $this->assertSame(13, $response[24][1]['racer'][0]['startTiming']);
+        $this->assertSame(0.13, $response[24][1]['racer'][0]['startTiming']);
         $this->assertSame(6.45, $response[24][1]['racer'][0]['nationwideRate1']);
         $this->assertSame(45.36, $response[24][1]['racer'][0]['nationwideRate2']);
         $this->assertSame(65.98, $response[24][1]['racer'][0]['nationwideRate3']);
@@ -318,7 +318,7 @@ class ClientTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(54.0, $response[24][1]['racer'][0]['weight']);
         $this->assertSame(1, $response[24][1]['racer'][0]['flying']);
         $this->assertSame(0, $response[24][1]['racer'][0]['late']);
-        $this->assertSame(13, $response[24][1]['racer'][0]['startTiming']);
+        $this->assertSame(0.13, $response[24][1]['racer'][0]['startTiming']);
         $this->assertSame(6.45, $response[24][1]['racer'][0]['nationwideRate1']);
         $this->assertSame(45.36, $response[24][1]['racer'][0]['nationwideRate2']);
         $this->assertSame(65.98, $response[24][1]['racer'][0]['nationwideRate3']);
@@ -355,7 +355,7 @@ class ClientTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(54.0, $response[24][1]['racer'][0]['weight']);
         $this->assertSame(1, $response[24][1]['racer'][0]['flying']);
         $this->assertSame(0, $response[24][1]['racer'][0]['late']);
-        $this->assertSame(13, $response[24][1]['racer'][0]['startTiming']);
+        $this->assertSame(0.13, $response[24][1]['racer'][0]['startTiming']);
         $this->assertSame(6.45, $response[24][1]['racer'][0]['nationwideRate1']);
         $this->assertSame(45.36, $response[24][1]['racer'][0]['nationwideRate2']);
         $this->assertSame(65.98, $response[24][1]['racer'][0]['nationwideRate3']);
@@ -383,7 +383,7 @@ class ClientTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(3833, $response[24][1]['arrival'][0]['racerId']);
         $this->assertSame('中辻 博訓', $response[24][1]['arrival'][0]['racerName']);
         $this->assertSame(1, $response[24][1]['course'][0]['frame']);
-        $this->assertSame(25, $response[24][1]['course'][0]['startTiming']);
+        $this->assertSame(0.25, $response[24][1]['course'][0]['startTiming']);
         $this->assertSame(1, $response[24][1]['course'][0]['technique']);
         $this->assertSame(3, $response[24][1]['weather']['weather']);
         $this->assertSame(5, $response[24][1]['weather']['wind']);
@@ -405,7 +405,7 @@ class ClientTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(3833, $response[24][1]['arrival'][0]['racerId']);
         $this->assertSame('中辻 博訓', $response[24][1]['arrival'][0]['racerName']);
         $this->assertSame(1, $response[24][1]['course'][0]['frame']);
-        $this->assertSame(25, $response[24][1]['course'][0]['startTiming']);
+        $this->assertSame(0.25, $response[24][1]['course'][0]['startTiming']);
         $this->assertSame(1, $response[24][1]['course'][0]['technique']);
         $this->assertSame(3, $response[24][1]['weather']['weather']);
         $this->assertSame(5, $response[24][1]['weather']['wind']);
@@ -421,7 +421,7 @@ class ClientTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(3833, $response[24][1]['arrival'][0]['racerId']);
         $this->assertSame('中辻 博訓', $response[24][1]['arrival'][0]['racerName']);
         $this->assertSame(1, $response[24][1]['course'][0]['frame']);
-        $this->assertSame(25, $response[24][1]['course'][0]['startTiming']);
+        $this->assertSame(0.25, $response[24][1]['course'][0]['startTiming']);
         $this->assertSame(1, $response[24][1]['course'][0]['technique']);
         $this->assertSame(3, $response[24][1]['weather']['weather']);
         $this->assertSame(5, $response[24][1]['weather']['wind']);
@@ -443,7 +443,7 @@ class ClientTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(3833, $response[24][1]['arrival'][0]['racerId']);
         $this->assertSame('中辻 博訓', $response[24][1]['arrival'][0]['racerName']);
         $this->assertSame(1, $response[24][1]['course'][0]['frame']);
-        $this->assertSame(25, $response[24][1]['course'][0]['startTiming']);
+        $this->assertSame(0.25, $response[24][1]['course'][0]['startTiming']);
         $this->assertSame(1, $response[24][1]['course'][0]['technique']);
         $this->assertSame(3, $response[24][1]['weather']['weather']);
         $this->assertSame(5, $response[24][1]['weather']['wind']);

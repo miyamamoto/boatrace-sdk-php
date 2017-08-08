@@ -50,9 +50,10 @@ class RaceResultCrawler extends Crawler
 
                 list($lastName, $firstName) = $this->splitName($racerName);
                 $racerName = sprintf('%s %s', $lastName, $firstName);
-                $arrival   = $this->convertArrival(trim(mb_convert_kana($arrival, 'n', 'utf-8')));
-                $frame     = (int)trim(mb_convert_kana($frame, 'n', 'utf-8'));
-                $racerId   = (int)trim(mb_convert_kana($racerId, 'n', 'utf-8'));
+
+                $arrival   = $this->instances['converter']->convertArrival($arrival);
+                $frame     = $this->instances['converter']->convertInt($frame);
+                $racerId   = $this->instances['converter']->convertInt($racerId);
 
                 $arrivalData[] = [
                     'arrival'   => $arrival,
@@ -72,9 +73,10 @@ class RaceResultCrawler extends Crawler
                 $start = $element->filter('div.table1_boatImage1 span.table1_boatImage1TimeInner')->text();
 
                 list($startTiming, $technique) = $this->splitName($start);
-                $frame       = (int)trim(mb_convert_kana($frame, 'n', 'utf-8'));
-                $startTiming = (int)ltrim(trim(mb_convert_kana($startTiming, 'n', 'utf-8')), '.');
-                $technique   = $this->convertTechnique(trim(mb_convert_kana($technique, 'n', 'utf-8')));
+
+                $frame       = $this->instances['converter']->convertInt($frame);
+                $startTiming = $this->instances['converter']->convertStartTiming($startTiming);
+                $technique   = $this->instances['converter']->convertTechnique($technique);
 
                 $courseData[] = [
                     'frame'       => $frame,
@@ -99,12 +101,12 @@ class RaceResultCrawler extends Crawler
             $wave             = $crawler->filter('div.weather1_body div.weather1_bodyUnit.is-wave span.weather1_bodyUnitLabelData')->text();
             $technique        = $crawler->filter('table.is-w243.is-h168 td.is-fs16')->text();
 
-            $temperature      = (float)rtrim(trim(mb_convert_kana($temperature, 'n', 'utf-8')), '℃');
-            $weather          = $this->convertWeather(trim(mb_convert_kana($weather, 'n', 'utf-8')));
-            $wind             = (int)rtrim(trim(mb_convert_kana($wind, 'n', 'utf-8')), 'm');
-            $waterTemperature = (float)rtrim(trim(mb_convert_kana($waterTemperature, 'n', 'utf-8')), '℃');
-            $wave             = (int)rtrim(trim(mb_convert_kana($wave, 'n', 'utf-8')), 'cm');
-            $technique        = $this->convertTechnique(trim(mb_convert_kana($technique, 'n', 'utf-8')));
+            $temperature      = $this->instances['converter']->convertTemperature($temperature);
+            $weather          = $this->instances['converter']->convertWeather($weather);
+            $wind             = $this->instances['converter']->convertWind($wind);
+            $waterTemperature = $this->instances['converter']->convertTemperature($waterTemperature);
+            $wave             = $this->instances['converter']->convertWave($wave);
+            $technique        = $this->instances['converter']->convertTechnique($technique);
 
             $basicData = [
                 'date'      => $date,
@@ -128,118 +130,5 @@ class RaceResultCrawler extends Crawler
         }
 
         return $response;
-    }
-
-    /**
-     * @param  string $arrival
-     * @return int
-     */
-    protected function convertArrival(string $arrival)
-    {
-        if (is_numeric($arrival)) {
-            return (int)$arrival;
-        }
-
-        if ($arrival === '妨') {
-            return 7;
-        }
-
-        if ($arrival === 'エ') {
-            return 8;
-        }
-
-        if ($arrival === '転') {
-            return 9;
-        }
-
-        if ($arrival === '落') {
-            return 10;
-        }
-
-        if ($arrival === '沈') {
-            return 11;
-        }
-
-        if ($arrival === '不') {
-            return 12;
-        }
-
-        if ($arrival === '失') {
-            return 13;
-        }
-
-        if ($arrival === 'Ｆ') {
-            return 14;
-        }
-
-        if ($arrival === 'L') {
-            return 15;
-        }
-
-        if ($arrival === '欠') {
-            return 16;
-        }
-    }
-
-    /**
-     * @param  string $technique
-     * @return int
-     */
-    protected function convertTechnique(string $technique)
-    {
-        if ($technique === '逃げ') {
-            return 1;
-        }
-
-        if ($technique === '差し') {
-            return 2;
-        }
-
-        if ($technique === 'まくり' || $technique === 'つけまい') {
-            return 3;
-        }
-
-        if ($technique === 'まくり差し') {
-            return 4;
-        }
-
-        if ($technique === '抜き') {
-            return 5;
-        }
-
-        if ($technique === '恵まれ') {
-            return 6;
-        }
-
-        return 7;
-    }
-
-    /**
-     * @param  string $weather
-     * @return int
-     */
-    protected function convertWeather(string $weather)
-    {
-        if ($weather === '晴') {
-            return 1;
-        }
-
-        if ($weather === '曇り') {
-            return 2;
-        }
-
-        if ($weather === '雨') {
-            return 3;
-        }
-
-        if ($weather === '雪') {
-            return 4;
-        }
-
-        if ($weather === '霧') {
-            return 5;
-        }
-
-        return 6;
     }
 }
