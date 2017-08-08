@@ -82,7 +82,7 @@ class Converter
                 return 12;
             case '失':
                 return 13;
-            case 'Ｆ':
+            case 'F':
                 return 14;
             case 'L':
                 return 15;
