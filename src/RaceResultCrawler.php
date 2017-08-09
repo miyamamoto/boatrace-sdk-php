@@ -24,11 +24,6 @@ class RaceResultCrawler extends Crawler
      */
     public function crawl(array $response, int $date, int $place, int $race)
     {
-        $basicData   = [];
-        $arrivalData = [];
-        $courseData  = [];
-        $weatherData = [];
-
         if (is_null($date)) {
             $date = $this->instances['datetime']->format('Ymd');
         }
@@ -36,7 +31,8 @@ class RaceResultCrawler extends Crawler
         $url = sprintf('%s/owpc/pc/race/raceresult?hd=%s&jcd=%02d&rno=%d', $this->baseUrl, $date, $place, $race);
         $crawler = $this->instances['goutte']->request('GET', $url);
 
-        $crawler->filter('table.is-w495 tbody')->each(function ($element) use (&$arrivalData) {
+        $arrivals = [];
+        $crawler->filter('table.is-w495 tbody')->each(function ($element) use (&$arrivals) {
             if (
                 count($element->filter('td.is-fs14')) &&
                 count($element->filter('td.is-fs14.is-fBold')) &&
@@ -51,12 +47,12 @@ class RaceResultCrawler extends Crawler
                 list($lastName, $firstName) = $this->splitName($racerName);
                 $racerName = sprintf('%s %s', $lastName, $firstName);
 
-                $arrival   = $this->instances['converter']->convertArrival($arrival);
-                $frame     = $this->instances['converter']->convertInt($frame);
-                $racerId   = $this->instances['converter']->convertInt($racerId);
+                $arrival = $this->instances['converter']->convertArrival($arrival);
+                $frame   = $this->instances['converter']->convertInt($frame);
+                $racerId = $this->instances['converter']->convertInt($racerId);
 
-                $arrivalData[] = [
-                    'arrival'   => $arrival,
+                $arrivals[] = [
+                    'id'        => $arrival,
                     'frame'     => $frame,
                     'racerId'   => $racerId,
                     'racerName' => $racerName,
@@ -64,24 +60,25 @@ class RaceResultCrawler extends Crawler
             }
         });
 
-        $crawler->filter('table.is-w495.is-h414 tbody.is-p10-0 tr')->each(function ($element) use (&$courseData) {
+        $id = 1;
+        $courses = [];
+        $crawler->filter('table.is-w495.is-h414 tbody.is-p10-0 tr')->each(function ($element) use (&$courses, &$id) {
             if (
                 count($element->filter('div.table1_boatImage1 span.table1_boatImage1Number')) &&
                 count($element->filter('div.table1_boatImage1 span.table1_boatImage1TimeInner'))
             ) {
-                $frame = $element->filter('div.table1_boatImage1 span.table1_boatImage1Number')->text();
-                $start = $element->filter('div.table1_boatImage1 span.table1_boatImage1TimeInner')->text();
+                $frame       = $element->filter('div.table1_boatImage1 span.table1_boatImage1Number')->text();
+                $startTiming = $element->filter('div.table1_boatImage1 span.table1_boatImage1TimeInner')->text();
 
-                list($startTiming, $technique) = $this->splitName($start);
+                list($startTiming, $empty) = $this->splitName($startTiming);
 
                 $frame       = $this->instances['converter']->convertInt($frame);
                 $startTiming = $this->instances['converter']->convertStartTiming($startTiming);
-                $technique   = $this->instances['converter']->convertTechnique($technique);
 
-                $courseData[] = [
+                $courses[] = [
+                    'id'          => $id++,
                     'frame'       => $frame,
                     'startTiming' => $startTiming,
-                    'technique'   => $technique,
                 ];
             }
         });
@@ -108,25 +105,18 @@ class RaceResultCrawler extends Crawler
             $wave             = $this->instances['converter']->convertWave($wave);
             $technique        = $this->instances['converter']->convertTechnique($technique);
 
-            $basicData = [
-                'date'      => $date,
-                'technique' => $technique,
-            ];
-
-            $weatherData = [
-                'weather'          => $weather,
-                'wind'             => $wind,
-                'wave'             => $wave,
-                'temperature'      => $temperature,
-                'waterTemperature' => $waterTemperature,
-            ];
+            $response[$place][$race]['date']             = $date;
+            $response[$place][$race]['technique']        = $technique;
+            $response[$place][$race]['weather']          = $weather;
+            $response[$place][$race]['wind']             = $wind;
+            $response[$place][$race]['wave']             = $wave;
+            $response[$place][$race]['temperature']      = $temperature;
+            $response[$place][$race]['waterTemperature'] = $waterTemperature;
         }
 
-        if ($basicData && $arrivalData && $courseData && $weatherData) {
-            $response[$place][$race]['basic']   = $basicData;
-            $response[$place][$race]['arrival'] = $arrivalData;
-            $response[$place][$race]['course']  = $courseData;
-            $response[$place][$race]['weather'] = $weatherData;
+        if ($arrivals && $courses) {
+            $response[$place][$race]['arrivals'] = $arrivals;
+            $response[$place][$race]['courses']  = $courses;
         }
 
         return $response;

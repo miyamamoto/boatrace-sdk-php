@@ -2,8 +2,6 @@
 
 namespace Boatrace;
 
-use Illuminate\Database\Capsule\Manager as Capsule;
-
 /**
  * @author shimomo
  */
@@ -24,7 +22,7 @@ abstract class Database
      */
     public function __construct()
     {
-        $this->capsule = new Capsule();
+        $this->capsule = new \Illuminate\Database\Capsule\Manager();
     }
 
     /**

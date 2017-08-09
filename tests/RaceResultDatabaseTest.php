@@ -64,10 +64,10 @@ class RaceResultDatabaseTest extends \PHPUnit\Framework\TestCase
      */
     public function testGet()
     {
-        $response = $this->database->get(['date' => 20140101, 'place_id' => 6, 'race_id' => 1]);
+        $response = $this->database->get(['date' => 20140101, 'place' => 6, 'race' => 1]);
         $this->assertSame(20140101, $response[0]['date']);
-        $this->assertSame(6, $response[0]['place_id']);
-        $this->assertSame(1, $response[0]['race_id']);
+        $this->assertSame(6, $response[0]['place']);
+        $this->assertSame(1, $response[0]['race']);
         $this->assertSame(3156, $response[0]['arrival_1_racer_id']);
         $this->assertSame(3987, $response[0]['arrival_2_racer_id']);
         $this->assertSame(4342, $response[0]['arrival_3_racer_id']);

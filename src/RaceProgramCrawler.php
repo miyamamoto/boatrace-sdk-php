@@ -24,9 +24,6 @@ class RaceProgramCrawler extends Crawler
      */
     public function crawl(array $response, int $date, int $place, int $race)
     {
-        $basicData = [];
-        $racerData = [];
-
         if (is_null($date)) {
             $date = $this->instances['datetime']->format('Ymd');
         }
@@ -35,30 +32,28 @@ class RaceProgramCrawler extends Crawler
         $crawler = $this->instances['goutte']->request('GET', $url);
 
         if (
-            count($crawler->filter('div.heading2_head div.heading2_area img')) &&
             count($crawler->filter('div.heading2_head div.heading2_title h2.heading2_titleName')) &&
             count($crawler->filter('div.heading2_head div.heading2_title span.heading2_titleDetail.is-type1'))
         ) {
-            $placeName = $crawler->filter('div.heading2_head div.heading2_area img')->attr('alt');
-            $name      = $crawler->filter('div.heading2_head div.heading2_title h2.heading2_titleName')->text();
-            $detail    = $crawler->filter('div.heading2_head div.heading2_title span.heading2_titleDetail.is-type1')->text();
+            $title         = $crawler->filter('div.heading2_head div.heading2_title h2.heading2_titleName')->text();
+            $classDistance = $crawler->filter('div.heading2_head div.heading2_title span.heading2_titleDetail.is-type1')->text();
 
-            list($type, $empty, $distance) = explode("\n", trim($detail));
-            $placeName = $this->instances['converter']->convertString($placeName);
-            $name      = $this->instances['converter']->convertString($name);
-            $type      = $this->instances['converter']->convertString($type);
-            $distance  = $this->instances['converter']->convertInt($distance);
+            list($class, $empty, $distance) = explode("\n", trim($classDistance));
 
-            $basicData = [
-                'date'     => $date,
-                'place'    => $placeName,
-                'name'     => $name,
-                'type'     => $type,
-                'distance' => $distance,
-            ];
+            $title    = $this->instances['converter']->convertString($title);
+            $class    = $this->instances['converter']->convertString($class);
+            $distance = $this->instances['converter']->convertInt($distance);
+
+            $response[$place][$race]['date']     = $date;
+            $response[$place][$race]['place']    = $place;
+            $response[$place][$race]['race']     = $race;
+            $response[$place][$race]['title']    = $title;
+            $response[$place][$race]['class']    = $class;
+            $response[$place][$race]['distance'] = $distance;
         }
 
-        $crawler->filter('table tbody.is-fs12')->each(function ($element) use (&$racerData) {
+        $racers = [];
+        $crawler->filter('table tbody.is-fs12')->each(function ($element) use (&$racers) {
             if (
                 count($element->filter('tr')->eq(0)->filter('td')->eq(0)) &&
                 count($element->filter('tr')->eq(0)->filter('td')->eq(1)->filter('a img')) &&
@@ -75,7 +70,7 @@ class RaceProgramCrawler extends Crawler
                 $photo                 = $element->filter('tr')->eq(0)->filter('td')->eq(1)->filter('a img')->attr('src');
                 $idRank                = $element->filter('tr')->eq(0)->filter('td')->eq(2)->filter('div')->eq(0)->text();
                 $name                  = $element->filter('tr')->eq(0)->filter('td')->eq(2)->filter('div')->eq(1)->filter('a')->text();
-                $PrefecturePhysical    = $element->filter('tr')->eq(0)->filter('td')->eq(2)->filter('div')->eq(2)->text();
+                $prefecturePhysical    = $element->filter('tr')->eq(0)->filter('td')->eq(2)->filter('div')->eq(2)->text();
                 $flyingLateStartTiming = $element->filter('tr')->eq(0)->filter('td')->eq(3)->text();
                 $nationwideRate        = $element->filter('tr')->eq(0)->filter('td')->eq(4)->text();
                 $localRate             = $element->filter('tr')->eq(0)->filter('td')->eq(5)->text();
@@ -83,7 +78,7 @@ class RaceProgramCrawler extends Crawler
                 $boatRate              = $element->filter('tr')->eq(0)->filter('td')->eq(7)->text();
 
                 list($id, $rank)                                           = explode('/', trim($idRank));
-                list($prefecture, $physical)                               = explode("\n", trim($PrefecturePhysical));
+                list($prefecture, $physical)                               = explode("\n", trim($prefecturePhysical));
                 list($branch, $graduate)                                   = explode('/', trim($prefecture));
                 list($age, $weight)                                        = explode('/', trim($physical));
                 list($flying, $late, $startTiming)                         = explode("\n", trim($flyingLateStartTiming));
@@ -118,7 +113,7 @@ class RaceProgramCrawler extends Crawler
                 $boatRate2       = $this->instances['converter']->convertFloat($boatRate2);
                 $boatRate3       = $this->instances['converter']->convertFloat($boatRate3);
 
-                $racerData[] = [
+                $racers[] = [
                     'frame'           => $frame,
                     'photo'           => $photo,
                     'id'              => $id,
@@ -147,9 +142,8 @@ class RaceProgramCrawler extends Crawler
             }
         });
 
-        if ($basicData && $racerData) {
-            $response[$place][$race]['basic'] = $basicData;
-            $response[$place][$race]['racer'] = $racerData;
+        if ($racers) {
+            $response[$place][$race]['racers'] = $racers;
         }
 
         return $response;

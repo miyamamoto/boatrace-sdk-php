@@ -60,11 +60,10 @@ class ClientTest extends \PHPUnit\Framework\TestCase
     {
         $response = $this->boatrace->getRaceProgramViaDatabase();
         $this->assertSame(20170707, $response[0]['date']);
-        $this->assertSame(24, $response[0]['place_id']);
-        $this->assertSame('大村', $response[0]['place_name']);
-        $this->assertSame('富士通フロンテック杯', $response[0]['race_name']);
-        $this->assertSame('めざまし戦一般', $response[0]['race_type']);
-        $this->assertSame(1800, $response[0]['race_distance']);
+        $this->assertSame(24, $response[0]['place']);
+        $this->assertSame('富士通フロンテック杯', $response[0]['title']);
+        $this->assertSame('めざまし戦一般', $response[0]['class']);
+        $this->assertSame(1800, $response[0]['distance']);
         $this->assertSame(4260, $response[0]['frame_1_racer_id']);
         $this->assertSame(4251, $response[0]['frame_2_racer_id']);
         $this->assertSame(3309, $response[0]['frame_3_racer_id']);
@@ -200,9 +199,14 @@ class ClientTest extends \PHPUnit\Framework\TestCase
     {
         $response = $this->boatrace->getRaceResultViaDatabase();
         $this->assertSame(20170707, $response[0]['date']);
-        $this->assertSame(24, $response[0]['place_id']);
-        $this->assertSame(1, $response[0]['race_id']);
+        $this->assertSame(24, $response[0]['place']);
+        $this->assertSame(1, $response[0]['race']);
         $this->assertSame(2, $response[0]['technique']);
+        $this->assertSame(2, $response[0]['weather']);
+        $this->assertSame(3, $response[0]['wind']);
+        $this->assertSame(2, $response[0]['wave']);
+        $this->assertSame(30.0, (float)$response[0]['temperature']);
+        $this->assertSame(28.0, (float)$response[0]['water_temperature']);
         $this->assertSame(2, $response[0]['arrival_1_frame']);
         $this->assertSame(1, $response[0]['arrival_2_frame']);
         $this->assertSame(4, $response[0]['arrival_3_frame']);
@@ -221,11 +225,6 @@ class ClientTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(0.17, (float)$response[0]['course_4_start_timing']);
         $this->assertSame(0.25, (float)$response[0]['course_5_start_timing']);
         $this->assertSame(0.19, (float)$response[0]['course_6_start_timing']);
-        $this->assertSame(2, $response[0]['weather']);
-        $this->assertSame(3, $response[0]['wind']);
-        $this->assertSame(2, $response[0]['wave']);
-        $this->assertSame(30.0, (float)$response[0]['temperature']);
-        $this->assertSame(28.0, (float)$response[0]['water_temperature']);
     }
 
     /**
@@ -234,35 +233,35 @@ class ClientTest extends \PHPUnit\Framework\TestCase
     public function testGetRaceProgramOne()
     {
         $response = $this->boatrace->getRaceProgram(20170331);
-        $this->assertSame(20170331, $response[24][1]['basic']['date']);
-        $this->assertSame('大村', $response[24][1]['basic']['place']);
-        $this->assertSame('おおむら桜祭り競走', $response[24][1]['basic']['name']);
-        $this->assertSame('めざまし戦一般', $response[24][1]['basic']['type']);
-        $this->assertSame(1800, $response[24][1]['basic']['distance']);
-        $this->assertSame(1, $response[24][1]['racer'][0]['frame']);
-        $this->assertSame('/racerphoto/3833.jpg', $response[24][1]['racer'][0]['photo']);
-        $this->assertSame(3833, $response[24][1]['racer'][0]['id']);
-        $this->assertSame('A1', $response[24][1]['racer'][0]['rank']);
-        $this->assertSame('中辻 博訓', $response[24][1]['racer'][0]['name']);
-        $this->assertSame('福井', $response[24][1]['racer'][0]['branch']);
-        $this->assertSame('福井', $response[24][1]['racer'][0]['graduate']);
-        $this->assertSame(42, $response[24][1]['racer'][0]['age']);
-        $this->assertSame(54.0, $response[24][1]['racer'][0]['weight']);
-        $this->assertSame(1, $response[24][1]['racer'][0]['flying']);
-        $this->assertSame(0, $response[24][1]['racer'][0]['late']);
-        $this->assertSame(0.13, $response[24][1]['racer'][0]['startTiming']);
-        $this->assertSame(6.45, $response[24][1]['racer'][0]['nationwideRate1']);
-        $this->assertSame(45.36, $response[24][1]['racer'][0]['nationwideRate2']);
-        $this->assertSame(65.98, $response[24][1]['racer'][0]['nationwideRate3']);
-        $this->assertSame(7.78, $response[24][1]['racer'][0]['localRate1']);
-        $this->assertSame(55.56, $response[24][1]['racer'][0]['localRate2']);
-        $this->assertSame(77.78, $response[24][1]['racer'][0]['localRate3']);
-        $this->assertSame(66, $response[24][1]['racer'][0]['motorNumber']);
-        $this->assertSame(88.89, $response[24][1]['racer'][0]['motorRate2']);
-        $this->assertSame(100.00, $response[24][1]['racer'][0]['motorRate3']);
-        $this->assertSame(71, $response[24][1]['racer'][0]['boatNumber']);
-        $this->assertSame(37.14, $response[24][1]['racer'][0]['boatRate2']);
-        $this->assertSame(55.00, $response[24][1]['racer'][0]['boatRate3']);
+        $this->assertSame(20170331, $response[24][1]['date']);
+        $this->assertSame(24, $response[24][1]['place']);
+        $this->assertSame('おおむら桜祭り競走', $response[24][1]['title']);
+        $this->assertSame('めざまし戦一般', $response[24][1]['class']);
+        $this->assertSame(1800, $response[24][1]['distance']);
+        $this->assertSame(1, $response[24][1]['racers'][0]['frame']);
+        $this->assertSame('/racerphoto/3833.jpg', $response[24][1]['racers'][0]['photo']);
+        $this->assertSame(3833, $response[24][1]['racers'][0]['id']);
+        $this->assertSame('A1', $response[24][1]['racers'][0]['rank']);
+        $this->assertSame('中辻 博訓', $response[24][1]['racers'][0]['name']);
+        $this->assertSame('福井', $response[24][1]['racers'][0]['branch']);
+        $this->assertSame('福井', $response[24][1]['racers'][0]['graduate']);
+        $this->assertSame(42, $response[24][1]['racers'][0]['age']);
+        $this->assertSame(54.0, $response[24][1]['racers'][0]['weight']);
+        $this->assertSame(1, $response[24][1]['racers'][0]['flying']);
+        $this->assertSame(0, $response[24][1]['racers'][0]['late']);
+        $this->assertSame(0.13, $response[24][1]['racers'][0]['startTiming']);
+        $this->assertSame(6.45, $response[24][1]['racers'][0]['nationwideRate1']);
+        $this->assertSame(45.36, $response[24][1]['racers'][0]['nationwideRate2']);
+        $this->assertSame(65.98, $response[24][1]['racers'][0]['nationwideRate3']);
+        $this->assertSame(7.78, $response[24][1]['racers'][0]['localRate1']);
+        $this->assertSame(55.56, $response[24][1]['racers'][0]['localRate2']);
+        $this->assertSame(77.78, $response[24][1]['racers'][0]['localRate3']);
+        $this->assertSame(66, $response[24][1]['racers'][0]['motorNumber']);
+        $this->assertSame(88.89, $response[24][1]['racers'][0]['motorRate2']);
+        $this->assertSame(100.00, $response[24][1]['racers'][0]['motorRate3']);
+        $this->assertSame(71, $response[24][1]['racers'][0]['boatNumber']);
+        $this->assertSame(37.14, $response[24][1]['racers'][0]['boatRate2']);
+        $this->assertSame(55.00, $response[24][1]['racers'][0]['boatRate3']);
     }
 
     /**
@@ -271,66 +270,66 @@ class ClientTest extends \PHPUnit\Framework\TestCase
     public function testGetRaceProgramTwo()
     {
         $response = $this->boatrace->getRaceProgram(20170331, 24);
-        $this->assertSame(20170331, $response[24][1]['basic']['date']);
-        $this->assertSame('大村', $response[24][1]['basic']['place']);
-        $this->assertSame('おおむら桜祭り競走', $response[24][1]['basic']['name']);
-        $this->assertSame('めざまし戦一般', $response[24][1]['basic']['type']);
-        $this->assertSame(1800, $response[24][1]['basic']['distance']);
-        $this->assertSame(1, $response[24][1]['racer'][0]['frame']);
-        $this->assertSame('/racerphoto/3833.jpg', $response[24][1]['racer'][0]['photo']);
-        $this->assertSame(3833, $response[24][1]['racer'][0]['id']);
-        $this->assertSame('A1', $response[24][1]['racer'][0]['rank']);
-        $this->assertSame('中辻 博訓', $response[24][1]['racer'][0]['name']);
-        $this->assertSame('福井', $response[24][1]['racer'][0]['branch']);
-        $this->assertSame('福井', $response[24][1]['racer'][0]['graduate']);
-        $this->assertSame(42, $response[24][1]['racer'][0]['age']);
-        $this->assertSame(54.0, $response[24][1]['racer'][0]['weight']);
-        $this->assertSame(1, $response[24][1]['racer'][0]['flying']);
-        $this->assertSame(0, $response[24][1]['racer'][0]['late']);
-        $this->assertSame(0.13, $response[24][1]['racer'][0]['startTiming']);
-        $this->assertSame(6.45, $response[24][1]['racer'][0]['nationwideRate1']);
-        $this->assertSame(45.36, $response[24][1]['racer'][0]['nationwideRate2']);
-        $this->assertSame(65.98, $response[24][1]['racer'][0]['nationwideRate3']);
-        $this->assertSame(7.78, $response[24][1]['racer'][0]['localRate1']);
-        $this->assertSame(55.56, $response[24][1]['racer'][0]['localRate2']);
-        $this->assertSame(77.78, $response[24][1]['racer'][0]['localRate3']);
-        $this->assertSame(66, $response[24][1]['racer'][0]['motorNumber']);
-        $this->assertSame(88.89, $response[24][1]['racer'][0]['motorRate2']);
-        $this->assertSame(100.00, $response[24][1]['racer'][0]['motorRate3']);
-        $this->assertSame(71, $response[24][1]['racer'][0]['boatNumber']);
-        $this->assertSame(37.14, $response[24][1]['racer'][0]['boatRate2']);
-        $this->assertSame(55.00, $response[24][1]['racer'][0]['boatRate3']);
+        $this->assertSame(20170331, $response[24][1]['date']);
+        $this->assertSame(24, $response[24][1]['place']);
+        $this->assertSame('おおむら桜祭り競走', $response[24][1]['title']);
+        $this->assertSame('めざまし戦一般', $response[24][1]['class']);
+        $this->assertSame(1800, $response[24][1]['distance']);
+        $this->assertSame(1, $response[24][1]['racers'][0]['frame']);
+        $this->assertSame('/racerphoto/3833.jpg', $response[24][1]['racers'][0]['photo']);
+        $this->assertSame(3833, $response[24][1]['racers'][0]['id']);
+        $this->assertSame('A1', $response[24][1]['racers'][0]['rank']);
+        $this->assertSame('中辻 博訓', $response[24][1]['racers'][0]['name']);
+        $this->assertSame('福井', $response[24][1]['racers'][0]['branch']);
+        $this->assertSame('福井', $response[24][1]['racers'][0]['graduate']);
+        $this->assertSame(42, $response[24][1]['racers'][0]['age']);
+        $this->assertSame(54.0, $response[24][1]['racers'][0]['weight']);
+        $this->assertSame(1, $response[24][1]['racers'][0]['flying']);
+        $this->assertSame(0, $response[24][1]['racers'][0]['late']);
+        $this->assertSame(0.13, $response[24][1]['racers'][0]['startTiming']);
+        $this->assertSame(6.45, $response[24][1]['racers'][0]['nationwideRate1']);
+        $this->assertSame(45.36, $response[24][1]['racers'][0]['nationwideRate2']);
+        $this->assertSame(65.98, $response[24][1]['racers'][0]['nationwideRate3']);
+        $this->assertSame(7.78, $response[24][1]['racers'][0]['localRate1']);
+        $this->assertSame(55.56, $response[24][1]['racers'][0]['localRate2']);
+        $this->assertSame(77.78, $response[24][1]['racers'][0]['localRate3']);
+        $this->assertSame(66, $response[24][1]['racers'][0]['motorNumber']);
+        $this->assertSame(88.89, $response[24][1]['racers'][0]['motorRate2']);
+        $this->assertSame(100.00, $response[24][1]['racers'][0]['motorRate3']);
+        $this->assertSame(71, $response[24][1]['racers'][0]['boatNumber']);
+        $this->assertSame(37.14, $response[24][1]['racers'][0]['boatRate2']);
+        $this->assertSame(55.00, $response[24][1]['racers'][0]['boatRate3']);
 
         $response = $this->boatrace->getRaceProgram(20170331, null, 1);
-        $this->assertSame(20170331, $response[24][1]['basic']['date']);
-        $this->assertSame('大村', $response[24][1]['basic']['place']);
-        $this->assertSame('おおむら桜祭り競走', $response[24][1]['basic']['name']);
-        $this->assertSame('めざまし戦一般', $response[24][1]['basic']['type']);
-        $this->assertSame(1800, $response[24][1]['basic']['distance']);
-        $this->assertSame(1, $response[24][1]['racer'][0]['frame']);
-        $this->assertSame('/racerphoto/3833.jpg', $response[24][1]['racer'][0]['photo']);
-        $this->assertSame(3833, $response[24][1]['racer'][0]['id']);
-        $this->assertSame('A1', $response[24][1]['racer'][0]['rank']);
-        $this->assertSame('中辻 博訓', $response[24][1]['racer'][0]['name']);
-        $this->assertSame('福井', $response[24][1]['racer'][0]['branch']);
-        $this->assertSame('福井', $response[24][1]['racer'][0]['graduate']);
-        $this->assertSame(42, $response[24][1]['racer'][0]['age']);
-        $this->assertSame(54.0, $response[24][1]['racer'][0]['weight']);
-        $this->assertSame(1, $response[24][1]['racer'][0]['flying']);
-        $this->assertSame(0, $response[24][1]['racer'][0]['late']);
-        $this->assertSame(0.13, $response[24][1]['racer'][0]['startTiming']);
-        $this->assertSame(6.45, $response[24][1]['racer'][0]['nationwideRate1']);
-        $this->assertSame(45.36, $response[24][1]['racer'][0]['nationwideRate2']);
-        $this->assertSame(65.98, $response[24][1]['racer'][0]['nationwideRate3']);
-        $this->assertSame(7.78, $response[24][1]['racer'][0]['localRate1']);
-        $this->assertSame(55.56, $response[24][1]['racer'][0]['localRate2']);
-        $this->assertSame(77.78, $response[24][1]['racer'][0]['localRate3']);
-        $this->assertSame(66, $response[24][1]['racer'][0]['motorNumber']);
-        $this->assertSame(88.89, $response[24][1]['racer'][0]['motorRate2']);
-        $this->assertSame(100.00, $response[24][1]['racer'][0]['motorRate3']);
-        $this->assertSame(71, $response[24][1]['racer'][0]['boatNumber']);
-        $this->assertSame(37.14, $response[24][1]['racer'][0]['boatRate2']);
-        $this->assertSame(55.00, $response[24][1]['racer'][0]['boatRate3']);
+        $this->assertSame(20170331, $response[24][1]['date']);
+        $this->assertSame(24, $response[24][1]['place']);
+        $this->assertSame('おおむら桜祭り競走', $response[24][1]['title']);
+        $this->assertSame('めざまし戦一般', $response[24][1]['class']);
+        $this->assertSame(1800, $response[24][1]['distance']);
+        $this->assertSame(1, $response[24][1]['racers'][0]['frame']);
+        $this->assertSame('/racerphoto/3833.jpg', $response[24][1]['racers'][0]['photo']);
+        $this->assertSame(3833, $response[24][1]['racers'][0]['id']);
+        $this->assertSame('A1', $response[24][1]['racers'][0]['rank']);
+        $this->assertSame('中辻 博訓', $response[24][1]['racers'][0]['name']);
+        $this->assertSame('福井', $response[24][1]['racers'][0]['branch']);
+        $this->assertSame('福井', $response[24][1]['racers'][0]['graduate']);
+        $this->assertSame(42, $response[24][1]['racers'][0]['age']);
+        $this->assertSame(54.0, $response[24][1]['racers'][0]['weight']);
+        $this->assertSame(1, $response[24][1]['racers'][0]['flying']);
+        $this->assertSame(0, $response[24][1]['racers'][0]['late']);
+        $this->assertSame(0.13, $response[24][1]['racers'][0]['startTiming']);
+        $this->assertSame(6.45, $response[24][1]['racers'][0]['nationwideRate1']);
+        $this->assertSame(45.36, $response[24][1]['racers'][0]['nationwideRate2']);
+        $this->assertSame(65.98, $response[24][1]['racers'][0]['nationwideRate3']);
+        $this->assertSame(7.78, $response[24][1]['racers'][0]['localRate1']);
+        $this->assertSame(55.56, $response[24][1]['racers'][0]['localRate2']);
+        $this->assertSame(77.78, $response[24][1]['racers'][0]['localRate3']);
+        $this->assertSame(66, $response[24][1]['racers'][0]['motorNumber']);
+        $this->assertSame(88.89, $response[24][1]['racers'][0]['motorRate2']);
+        $this->assertSame(100.00, $response[24][1]['racers'][0]['motorRate3']);
+        $this->assertSame(71, $response[24][1]['racers'][0]['boatNumber']);
+        $this->assertSame(37.14, $response[24][1]['racers'][0]['boatRate2']);
+        $this->assertSame(55.00, $response[24][1]['racers'][0]['boatRate3']);
     }
 
     /**
@@ -339,35 +338,35 @@ class ClientTest extends \PHPUnit\Framework\TestCase
     public function testGetRaceProgramThree()
     {
         $response = $this->boatrace->getRaceProgram(20170331, 24, 1);
-        $this->assertSame(20170331, $response[24][1]['basic']['date']);
-        $this->assertSame('大村', $response[24][1]['basic']['place']);
-        $this->assertSame('おおむら桜祭り競走', $response[24][1]['basic']['name']);
-        $this->assertSame('めざまし戦一般', $response[24][1]['basic']['type']);
-        $this->assertSame(1800, $response[24][1]['basic']['distance']);
-        $this->assertSame(1, $response[24][1]['racer'][0]['frame']);
-        $this->assertSame('/racerphoto/3833.jpg', $response[24][1]['racer'][0]['photo']);
-        $this->assertSame(3833, $response[24][1]['racer'][0]['id']);
-        $this->assertSame('A1', $response[24][1]['racer'][0]['rank']);
-        $this->assertSame('中辻 博訓', $response[24][1]['racer'][0]['name']);
-        $this->assertSame('福井', $response[24][1]['racer'][0]['branch']);
-        $this->assertSame('福井', $response[24][1]['racer'][0]['graduate']);
-        $this->assertSame(42, $response[24][1]['racer'][0]['age']);
-        $this->assertSame(54.0, $response[24][1]['racer'][0]['weight']);
-        $this->assertSame(1, $response[24][1]['racer'][0]['flying']);
-        $this->assertSame(0, $response[24][1]['racer'][0]['late']);
-        $this->assertSame(0.13, $response[24][1]['racer'][0]['startTiming']);
-        $this->assertSame(6.45, $response[24][1]['racer'][0]['nationwideRate1']);
-        $this->assertSame(45.36, $response[24][1]['racer'][0]['nationwideRate2']);
-        $this->assertSame(65.98, $response[24][1]['racer'][0]['nationwideRate3']);
-        $this->assertSame(7.78, $response[24][1]['racer'][0]['localRate1']);
-        $this->assertSame(55.56, $response[24][1]['racer'][0]['localRate2']);
-        $this->assertSame(77.78, $response[24][1]['racer'][0]['localRate3']);
-        $this->assertSame(66, $response[24][1]['racer'][0]['motorNumber']);
-        $this->assertSame(88.89, $response[24][1]['racer'][0]['motorRate2']);
-        $this->assertSame(100.00, $response[24][1]['racer'][0]['motorRate3']);
-        $this->assertSame(71, $response[24][1]['racer'][0]['boatNumber']);
-        $this->assertSame(37.14, $response[24][1]['racer'][0]['boatRate2']);
-        $this->assertSame(55.00, $response[24][1]['racer'][0]['boatRate3']);
+        $this->assertSame(20170331, $response[24][1]['date']);
+        $this->assertSame(24, $response[24][1]['place']);
+        $this->assertSame('おおむら桜祭り競走', $response[24][1]['title']);
+        $this->assertSame('めざまし戦一般', $response[24][1]['class']);
+        $this->assertSame(1800, $response[24][1]['distance']);
+        $this->assertSame(1, $response[24][1]['racers'][0]['frame']);
+        $this->assertSame('/racerphoto/3833.jpg', $response[24][1]['racers'][0]['photo']);
+        $this->assertSame(3833, $response[24][1]['racers'][0]['id']);
+        $this->assertSame('A1', $response[24][1]['racers'][0]['rank']);
+        $this->assertSame('中辻 博訓', $response[24][1]['racers'][0]['name']);
+        $this->assertSame('福井', $response[24][1]['racers'][0]['branch']);
+        $this->assertSame('福井', $response[24][1]['racers'][0]['graduate']);
+        $this->assertSame(42, $response[24][1]['racers'][0]['age']);
+        $this->assertSame(54.0, $response[24][1]['racers'][0]['weight']);
+        $this->assertSame(1, $response[24][1]['racers'][0]['flying']);
+        $this->assertSame(0, $response[24][1]['racers'][0]['late']);
+        $this->assertSame(0.13, $response[24][1]['racers'][0]['startTiming']);
+        $this->assertSame(6.45, $response[24][1]['racers'][0]['nationwideRate1']);
+        $this->assertSame(45.36, $response[24][1]['racers'][0]['nationwideRate2']);
+        $this->assertSame(65.98, $response[24][1]['racers'][0]['nationwideRate3']);
+        $this->assertSame(7.78, $response[24][1]['racers'][0]['localRate1']);
+        $this->assertSame(55.56, $response[24][1]['racers'][0]['localRate2']);
+        $this->assertSame(77.78, $response[24][1]['racers'][0]['localRate3']);
+        $this->assertSame(66, $response[24][1]['racers'][0]['motorNumber']);
+        $this->assertSame(88.89, $response[24][1]['racers'][0]['motorRate2']);
+        $this->assertSame(100.00, $response[24][1]['racers'][0]['motorRate3']);
+        $this->assertSame(71, $response[24][1]['racers'][0]['boatNumber']);
+        $this->assertSame(37.14, $response[24][1]['racers'][0]['boatRate2']);
+        $this->assertSame(55.00, $response[24][1]['racers'][0]['boatRate3']);
     }
 
     /**
@@ -376,20 +375,19 @@ class ClientTest extends \PHPUnit\Framework\TestCase
     public function testGetRaceResultOne()
     {
         $response = $this->boatrace->getRaceResult(20170331);
-        $this->assertSame(20170331, $response[24][1]['basic']['date']);
-        $this->assertSame(1, $response[24][1]['basic']['technique']);
-        $this->assertSame(1, $response[24][1]['arrival'][0]['arrival']);
-        $this->assertSame(1, $response[24][1]['arrival'][0]['frame']);
-        $this->assertSame(3833, $response[24][1]['arrival'][0]['racerId']);
-        $this->assertSame('中辻 博訓', $response[24][1]['arrival'][0]['racerName']);
-        $this->assertSame(1, $response[24][1]['course'][0]['frame']);
-        $this->assertSame(0.25, $response[24][1]['course'][0]['startTiming']);
-        $this->assertSame(1, $response[24][1]['course'][0]['technique']);
-        $this->assertSame(3, $response[24][1]['weather']['weather']);
-        $this->assertSame(5, $response[24][1]['weather']['wind']);
-        $this->assertSame(4, $response[24][1]['weather']['wave']);
-        $this->assertSame(13.0, $response[24][1]['weather']['temperature']);
-        $this->assertSame(14.0, $response[24][1]['weather']['waterTemperature']);
+        $this->assertSame(20170331, $response[24][1]['date']);
+        $this->assertSame(1, $response[24][1]['technique']);
+        $this->assertSame(3, $response[24][1]['weather']);
+        $this->assertSame(5, $response[24][1]['wind']);
+        $this->assertSame(4, $response[24][1]['wave']);
+        $this->assertSame(13.0, $response[24][1]['temperature']);
+        $this->assertSame(14.0, $response[24][1]['waterTemperature']);
+        $this->assertSame(1, $response[24][1]['arrivals'][0]['id']);
+        $this->assertSame(1, $response[24][1]['arrivals'][0]['frame']);
+        $this->assertSame(3833, $response[24][1]['arrivals'][0]['racerId']);
+        $this->assertSame('中辻 博訓', $response[24][1]['arrivals'][0]['racerName']);
+        $this->assertSame(1, $response[24][1]['courses'][0]['frame']);
+        $this->assertSame(0.25, $response[24][1]['courses'][0]['startTiming']);
     }
 
     /**
@@ -398,36 +396,34 @@ class ClientTest extends \PHPUnit\Framework\TestCase
     public function testGetRaceResultTwo()
     {
         $response = $this->boatrace->getRaceResult(20170331, 24);
-        $this->assertSame(20170331, $response[24][1]['basic']['date']);
-        $this->assertSame(1, $response[24][1]['basic']['technique']);
-        $this->assertSame(1, $response[24][1]['arrival'][0]['arrival']);
-        $this->assertSame(1, $response[24][1]['arrival'][0]['frame']);
-        $this->assertSame(3833, $response[24][1]['arrival'][0]['racerId']);
-        $this->assertSame('中辻 博訓', $response[24][1]['arrival'][0]['racerName']);
-        $this->assertSame(1, $response[24][1]['course'][0]['frame']);
-        $this->assertSame(0.25, $response[24][1]['course'][0]['startTiming']);
-        $this->assertSame(1, $response[24][1]['course'][0]['technique']);
-        $this->assertSame(3, $response[24][1]['weather']['weather']);
-        $this->assertSame(5, $response[24][1]['weather']['wind']);
-        $this->assertSame(4, $response[24][1]['weather']['wave']);
-        $this->assertSame(13.0, $response[24][1]['weather']['temperature']);
-        $this->assertSame(14.0, $response[24][1]['weather']['waterTemperature']);
+        $this->assertSame(20170331, $response[24][1]['date']);
+        $this->assertSame(1, $response[24][1]['technique']);
+        $this->assertSame(3, $response[24][1]['weather']);
+        $this->assertSame(5, $response[24][1]['wind']);
+        $this->assertSame(4, $response[24][1]['wave']);
+        $this->assertSame(13.0, $response[24][1]['temperature']);
+        $this->assertSame(14.0, $response[24][1]['waterTemperature']);
+        $this->assertSame(1, $response[24][1]['arrivals'][0]['id']);
+        $this->assertSame(1, $response[24][1]['arrivals'][0]['frame']);
+        $this->assertSame(3833, $response[24][1]['arrivals'][0]['racerId']);
+        $this->assertSame('中辻 博訓', $response[24][1]['arrivals'][0]['racerName']);
+        $this->assertSame(1, $response[24][1]['courses'][0]['frame']);
+        $this->assertSame(0.25, $response[24][1]['courses'][0]['startTiming']);
 
         $response = $this->boatrace->getRaceResult(20170331, null, 1);
-        $this->assertSame(20170331, $response[24][1]['basic']['date']);
-        $this->assertSame(1, $response[24][1]['basic']['technique']);
-        $this->assertSame(1, $response[24][1]['arrival'][0]['arrival']);
-        $this->assertSame(1, $response[24][1]['arrival'][0]['frame']);
-        $this->assertSame(3833, $response[24][1]['arrival'][0]['racerId']);
-        $this->assertSame('中辻 博訓', $response[24][1]['arrival'][0]['racerName']);
-        $this->assertSame(1, $response[24][1]['course'][0]['frame']);
-        $this->assertSame(0.25, $response[24][1]['course'][0]['startTiming']);
-        $this->assertSame(1, $response[24][1]['course'][0]['technique']);
-        $this->assertSame(3, $response[24][1]['weather']['weather']);
-        $this->assertSame(5, $response[24][1]['weather']['wind']);
-        $this->assertSame(4, $response[24][1]['weather']['wave']);
-        $this->assertSame(13.0, $response[24][1]['weather']['temperature']);
-        $this->assertSame(14.0, $response[24][1]['weather']['waterTemperature']);
+        $this->assertSame(20170331, $response[24][1]['date']);
+        $this->assertSame(1, $response[24][1]['technique']);
+        $this->assertSame(3, $response[24][1]['weather']);
+        $this->assertSame(5, $response[24][1]['wind']);
+        $this->assertSame(4, $response[24][1]['wave']);
+        $this->assertSame(13.0, $response[24][1]['temperature']);
+        $this->assertSame(14.0, $response[24][1]['waterTemperature']);
+        $this->assertSame(1, $response[24][1]['arrivals'][0]['id']);
+        $this->assertSame(1, $response[24][1]['arrivals'][0]['frame']);
+        $this->assertSame(3833, $response[24][1]['arrivals'][0]['racerId']);
+        $this->assertSame('中辻 博訓', $response[24][1]['arrivals'][0]['racerName']);
+        $this->assertSame(1, $response[24][1]['courses'][0]['frame']);
+        $this->assertSame(0.25, $response[24][1]['courses'][0]['startTiming']);
     }
 
     /**
@@ -436,19 +432,18 @@ class ClientTest extends \PHPUnit\Framework\TestCase
     public function testGetRaceResultThree()
     {
         $response = $this->boatrace->getRaceResult(20170331, 24, 1);
-        $this->assertSame(20170331, $response[24][1]['basic']['date']);
-        $this->assertSame(1, $response[24][1]['basic']['technique']);
-        $this->assertSame(1, $response[24][1]['arrival'][0]['arrival']);
-        $this->assertSame(1, $response[24][1]['arrival'][0]['frame']);
-        $this->assertSame(3833, $response[24][1]['arrival'][0]['racerId']);
-        $this->assertSame('中辻 博訓', $response[24][1]['arrival'][0]['racerName']);
-        $this->assertSame(1, $response[24][1]['course'][0]['frame']);
-        $this->assertSame(0.25, $response[24][1]['course'][0]['startTiming']);
-        $this->assertSame(1, $response[24][1]['course'][0]['technique']);
-        $this->assertSame(3, $response[24][1]['weather']['weather']);
-        $this->assertSame(5, $response[24][1]['weather']['wind']);
-        $this->assertSame(4, $response[24][1]['weather']['wave']);
-        $this->assertSame(13.0, $response[24][1]['weather']['temperature']);
-        $this->assertSame(14.0, $response[24][1]['weather']['waterTemperature']);
+        $this->assertSame(20170331, $response[24][1]['date']);
+        $this->assertSame(1, $response[24][1]['technique']);
+        $this->assertSame(3, $response[24][1]['weather']);
+        $this->assertSame(5, $response[24][1]['wind']);
+        $this->assertSame(4, $response[24][1]['wave']);
+        $this->assertSame(13.0, $response[24][1]['temperature']);
+        $this->assertSame(14.0, $response[24][1]['waterTemperature']);
+        $this->assertSame(1, $response[24][1]['arrivals'][0]['id']);
+        $this->assertSame(1, $response[24][1]['arrivals'][0]['frame']);
+        $this->assertSame(3833, $response[24][1]['arrivals'][0]['racerId']);
+        $this->assertSame('中辻 博訓', $response[24][1]['arrivals'][0]['racerName']);
+        $this->assertSame(1, $response[24][1]['courses'][0]['frame']);
+        $this->assertSame(0.25, $response[24][1]['courses'][0]['startTiming']);
     }
 }
