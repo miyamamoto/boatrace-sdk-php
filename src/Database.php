@@ -35,6 +35,14 @@ abstract class Database
     }
 
     /**
+     * @return array
+     */
+    public function getConfig()
+    {
+        return $this->config;
+    }
+
+    /**
      * @return \Illuminate\Database\Connection
      */
     public function connect()
