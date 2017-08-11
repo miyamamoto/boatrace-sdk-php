@@ -33,17 +33,9 @@ $boatrace = new \Boatrace\Client();
  * 出走表データの取得
  **************************************************/
 
-// 2017年07月07日, 大村, 1R
-$response = $boatrace->getRaceProgram(20170707, 24, 1);
-var_dump($response);
-
-// 2017年07月07日, 大村, 1R ~ 12R
-$response = $boatrace->getRaceProgram(20170707, 24);
-var_dump($response);
-
-// 2017年07月07日, 桐生 ~ 大村, 1R ~ 12R
-$response = $boatrace->getRaceProgram(20170707, 24);
-var_dump($response);
+$response = $boatrace->getRaceProgram(20170707, 24, 1); // 2017年07月07日, 大村, 1R
+$response = $boatrace->getRaceProgram(20170707, 24);    // 2017年07月07日, 大村, 1R ~ 12R
+$response = $boatrace->getRaceProgram(20170707);        // 2017年07月07日, 桐生 ~ 大村, 1R ~ 12R
 
 
 
@@ -51,17 +43,9 @@ var_dump($response);
  * 結果データの取得
  **************************************************/
 
-// 2017年07月07日, 大村, 1R
-$response = $boatrace->getRaceResult(20170707, 24, 1);
-var_dump($response);
-
-// 2017年07月07日, 大村, 1R ~ 12R
-$response = $boatrace->getRaceResult(20170707, 24);
-var_dump($response);
-
-// 2017年07月07日, 桐生 ~ 大村, 1R ~ 12R
-$response = $boatrace->getRaceResult(20170707);
-var_dump($response);
+$response = $boatrace->getRaceResult(20170707, 24, 1); // 2017年07月07日, 大村, 1R
+$response = $boatrace->getRaceResult(20170707, 24);    // 2017年07月07日, 大村, 1R ~ 12R
+$response = $boatrace->getRaceResult(20170707);        // 2017年07月07日, 桐生 ~ 大村, 1R ~ 12R
 
 
 
@@ -70,7 +54,7 @@ var_dump($response);
  **************************************************/
 
 // データベースの設定
-$config = [
+$this->boatrace->setConfig([
     'driver'    => 'pgsql',
     'host'      => 'localhost',
     'database'  => 'boatrace',
@@ -79,15 +63,10 @@ $config = [
     'charset'   => 'utf8',
     'collation' => 'utf8_unicode_ci',
     'prefix'    => '',
-];
+]);
 
-// 2017年07月07日, 大村, 1R
-$this->boatrace->setConfig($config);
-$this->boatrace->storeRaceProgramInDatabase(20170707, 24, 1);
-
-// 2017年07月07日, 大村, 1R
-$this->boatrace->setConfig($config);
-$this->boatrace->storeRaceResultInDatabase(20170707, 24, 1);
+$this->boatrace->storeRaceProgramInDatabase(20170707, 24, 1); // 2017年07月07日, 大村, 1R
+$this->boatrace->storeRaceResultInDatabase(20170707, 24, 1);  // 2017年07月07日, 大村, 1R
 ```
 
 ## Example
