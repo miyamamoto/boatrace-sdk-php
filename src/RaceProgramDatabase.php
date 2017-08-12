@@ -33,6 +33,16 @@ class RaceProgramDatabase extends Database
     {
         $response = $this->connect()->table('programs');
         foreach ($conditions as $k => $v) {
+            if ($k === 'skip') {
+                $response->skip($v);
+                continue;
+            }
+
+            if ($k === 'take') {
+                $response->take($v);
+                continue;
+            }
+
             $response->where($k, $v);
         }
 
