@@ -43,6 +43,16 @@ class RaceResultDatabase extends Database
                 continue;
             }
 
+            if ($k === 'from_date') {
+                $response->where('date', '>=', $v);
+                continue;
+            }
+
+            if ($k === 'to_date') {
+                $response->where('date', '<=', $v);
+                continue;
+            }
+
             $response->where($k, $v);
         }
 
