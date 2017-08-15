@@ -7,8 +7,8 @@ create table if not exists results (
     weather               integer,
     wind                  integer,
     wave                  integer,
-    temperature           numeric,
-    water_temperature     numeric,
+    temperature           decimal(3, 1),
+    water_temperature     decimal(3, 1),
     arrival_1_id          integer,
     arrival_2_id          integer,
     arrival_3_id          integer,
@@ -51,10 +51,10 @@ create table if not exists results (
     course_4_frame        integer,
     course_5_frame        integer,
     course_6_frame        integer,
-    course_1_start_timing numeric,
-    course_2_start_timing numeric,
-    course_3_start_timing numeric,
-    course_4_start_timing numeric,
-    course_5_start_timing numeric,
-    course_6_start_timing numeric
+    course_1_start_timing decimal(3, 2),
+    course_2_start_timing decimal(3, 2),
+    course_3_start_timing decimal(3, 2),
+    course_4_start_timing decimal(3, 2),
+    course_5_start_timing decimal(3, 2),
+    course_6_start_timing decimal(3, 2)
 );
