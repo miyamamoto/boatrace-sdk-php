@@ -6,6 +6,7 @@ create table if not exists programs (
     title                           text,
     class                           text,
     distance                        integer,
+    deadline                        integer,
     frame_1_racer_id                integer,
     frame_2_racer_id                integer,
     frame_3_racer_id                integer,

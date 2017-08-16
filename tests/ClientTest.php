@@ -64,6 +64,7 @@ class ClientTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('富士通フロンテック杯', $response[0]['title']);
         $this->assertSame('めざまし戦一般', $response[0]['class']);
         $this->assertSame(1800, $response[0]['distance']);
+        $this->assertSame(1237, $response[0]['deadline']);
         $this->assertSame(4260, $response[0]['frame_1_racer_id']);
         $this->assertSame(4251, $response[0]['frame_2_racer_id']);
         $this->assertSame(3309, $response[0]['frame_3_racer_id']);
@@ -238,6 +239,7 @@ class ClientTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('おおむら桜祭り競走', $response[24][1]['title']);
         $this->assertSame('めざまし戦一般', $response[24][1]['class']);
         $this->assertSame(1800, $response[24][1]['distance']);
+        $this->assertSame(1200, $response[24][1]['deadline']);
         $this->assertSame(1, $response[24][1]['racers'][0]['frame']);
         $this->assertSame('/racerphoto/3833.jpg', $response[24][1]['racers'][0]['photo']);
         $this->assertSame(3833, $response[24][1]['racers'][0]['id']);
@@ -275,6 +277,7 @@ class ClientTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('おおむら桜祭り競走', $response[24][1]['title']);
         $this->assertSame('めざまし戦一般', $response[24][1]['class']);
         $this->assertSame(1800, $response[24][1]['distance']);
+        $this->assertSame(1200, $response[24][1]['deadline']);
         $this->assertSame(1, $response[24][1]['racers'][0]['frame']);
         $this->assertSame('/racerphoto/3833.jpg', $response[24][1]['racers'][0]['photo']);
         $this->assertSame(3833, $response[24][1]['racers'][0]['id']);
@@ -306,6 +309,7 @@ class ClientTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('おおむら桜祭り競走', $response[24][1]['title']);
         $this->assertSame('めざまし戦一般', $response[24][1]['class']);
         $this->assertSame(1800, $response[24][1]['distance']);
+        $this->assertSame(1200, $response[24][1]['deadline']);
         $this->assertSame(1, $response[24][1]['racers'][0]['frame']);
         $this->assertSame('/racerphoto/3833.jpg', $response[24][1]['racers'][0]['photo']);
         $this->assertSame(3833, $response[24][1]['racers'][0]['id']);
@@ -343,6 +347,7 @@ class ClientTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('おおむら桜祭り競走', $response[24][1]['title']);
         $this->assertSame('めざまし戦一般', $response[24][1]['class']);
         $this->assertSame(1800, $response[24][1]['distance']);
+        $this->assertSame(1200, $response[24][1]['deadline']);
         $this->assertSame(1, $response[24][1]['racers'][0]['frame']);
         $this->assertSame('/racerphoto/3833.jpg', $response[24][1]['racers'][0]['photo']);
         $this->assertSame(3833, $response[24][1]['racers'][0]['id']);

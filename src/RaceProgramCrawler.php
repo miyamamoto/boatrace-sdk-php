@@ -33,16 +33,20 @@ class RaceProgramCrawler extends Crawler
 
         if (
             count($crawler->filter('div.heading2_head div.heading2_title h2.heading2_titleName')) &&
-            count($crawler->filter('div.heading2_head div.heading2_title span.heading2_titleDetail.is-type1'))
+            count($crawler->filter('div.heading2_head div.heading2_title span.heading2_titleDetail.is-type1')) &&
+            count($crawler->filter('div.table1')->eq(0)->filter('table tbody tr')->eq(0)->filter('td')->eq($race))
         ) {
             $title         = $crawler->filter('div.heading2_head div.heading2_title h2.heading2_titleName')->text();
             $classDistance = $crawler->filter('div.heading2_head div.heading2_title span.heading2_titleDetail.is-type1')->text();
+            $deadline      = $crawler->filter('div.table1')->eq(0)->filter('table tbody tr')->eq(0)->filter('td')->eq($race)->text();
 
             list($class, $empty, $distance) = explode("\n", trim($classDistance));
+            list($hours, $minutes) = explode(':', trim($deadline));
 
             $title    = $this->instances['converter']->convertString($title);
             $class    = $this->instances['converter']->convertString($class);
             $distance = $this->instances['converter']->convertInt($distance);
+            $deadline = $this->instances['converter']->convertInt($hours . $minutes);
 
             $response[$place][$race]['date']     = $date;
             $response[$place][$race]['place']    = $place;
@@ -50,6 +54,7 @@ class RaceProgramCrawler extends Crawler
             $response[$place][$race]['title']    = $title;
             $response[$place][$race]['class']    = $class;
             $response[$place][$race]['distance'] = $distance;
+            $response[$place][$race]['deadline'] = $deadline;
         }
 
         $racers = [];

@@ -71,6 +71,7 @@ class RaceProgramDatabase extends Database
                     'title'                           => $races['title']                        ?? null,
                     'class'                           => $races['class']                        ?? null,
                     'distance'                        => $races['distance']                     ?? null,
+                    'deadline'                        => $races['deadline']                     ?? null,
                     'frame_1_racer_id'                => $races['racers'][0]['id']              ?? null,
                     'frame_2_racer_id'                => $races['racers'][1]['id']              ?? null,
                     'frame_3_racer_id'                => $races['racers'][2]['id']              ?? null,

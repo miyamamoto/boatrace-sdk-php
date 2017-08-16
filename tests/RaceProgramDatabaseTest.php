@@ -70,6 +70,7 @@ class RaceProgramDatabaseTest extends \PHPUnit\Framework\TestCase
         $this->assertSame('静岡新聞社・静岡放送 New Year’s Cup', $response[0]['title']);
         $this->assertSame('予 選', $response[0]['class']);
         $this->assertSame(1800, $response[0]['distance']);
+        $this->assertSame(1041, $response[0]['deadline']);
         $this->assertSame(3156, $response[0]['frame_1_racer_id']);
         $this->assertSame(3987, $response[0]['frame_2_racer_id']);
         $this->assertSame(4625, $response[0]['frame_3_racer_id']);
